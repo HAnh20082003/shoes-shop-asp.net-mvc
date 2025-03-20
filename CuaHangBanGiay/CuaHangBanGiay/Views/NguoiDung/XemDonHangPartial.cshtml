@@ -1,0 +1,111 @@
+﻿@using CuaHangBanGiay.Models;
+@model tb_DonMuaHang
+
+<div class="modal fade" id="modalXemDonHang-@Model.ID">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Chi tiết đơn hàng của bạn</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-left">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <strong style="color:red;">Họ tên: </strong>@Model.HoTen
+                        </div>
+                        <div class="form-group">
+                            <strong style="color:red;">Địa chỉ: </strong>@Model.DiaChiGiaoHang
+                        </div>
+                        <div class="form-group">
+                            <strong style="color:red;">SĐT: </strong>@Model.SDT
+                        </div>
+                        <div class="form-group">
+                            <strong style="color:red;">Loại địa chỉ: </strong>@(Model.NhaRieng == false ? "Nhà riêng" : "Văn phòng")
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <strong style="color:red;">Ngày đặt: </strong>@Model.NgayDat
+                        </div>
+                        @{
+                            if (Model.NgayDuKien != null)
+                            {
+                                <div class="form-group">
+                                    <strong style="color:red;">Ngày dự kiến: </strong>@Model.NgayDuKien
+                                </div>
+                            }
+                        }
+                        <div class="form-group">
+                            <strong style="color:red;">Thành tiền: </strong>@ConvertMoney.convertMoney(Model.TongTien).000VNĐ
+                        </div>
+                        <div class="form-group">
+                            <strong style="color:red;">Tiền ship: </strong>@ConvertMoney.convertMoney(Model.TienShip).000VNĐ
+                        </div>
+                        <div class="form-group">
+                            <strong style="color:red;">Tổng cộng: </strong>@ConvertMoney.convertMoney(Model.TongCong).000VNĐ
+                        </div>
+
+                        <div class="form-group">
+                            <strong style="color:red;">Hình thức: </strong>@Model.HinhThucTT
+                        </div>
+                    </div>
+                </div>
+               
+
+               
+
+              
+
+
+                <table class="table table-light table-borderless table-hover text-center mb-0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Thông số</th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        @{
+                            var dsmh = Model.tb_MoTaDonHang;
+                            int i = 1;
+                            foreach (var item in dsmh)
+                            {
+                                <tr>
+                                    <td class="align-middle">
+                                        @i
+                                    </td>
+                                    <td class="align-middle">
+                                        <img style="width: 50px; height: 50px" src="~/@Init.folderImageProduct@item.tb_MatHang.TenMatHang/@item.tb_MatHang.AnhMoTa" />
+                                    </td>
+                                    <td class="align-middle">
+                                        @item.tb_MatHang.TenMatHang
+                                    </td>
+                                    <td class="align-middle">@item.tb_BangKichThuoc.KichThuoc, @item.tb_BangMauSP.MauSac, @item.tb_BangGioiTinh.GioiTinh</td>
+                                    <td class="align-middle">
+                                        @Init.getGiamGiaSanPham(item.Gia, item.GiamGia).000 VNĐ
+                                    </td>
+                                    <td class="align-middle">@item.SoLuong</td>
+                                    <td class="align-middle">@ConvertMoney.convertMoney(item.ThanhTien).000VNĐ</td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

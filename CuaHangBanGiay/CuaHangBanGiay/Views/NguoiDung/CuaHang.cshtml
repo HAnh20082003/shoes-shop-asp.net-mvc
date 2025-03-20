@@ -1,0 +1,145 @@
+﻿
+@using CuaHangBanGiay.Models;
+
+@{
+    ViewBag.Title = "CuaHang";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet">
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="@Url.Action("TrangChu", "NguoiDung")">Trang chủ</a>
+                @{
+                    if (ViewBag.ID_DanhMuc != null)
+                    {
+                        <span class="breadcrumb-item active">Danh mục "@ViewBag.TenDanhMuc"</span>
+                    }
+                    else if (Session["keyword"] != null && (string)Session["keyword"] != "")
+                    {
+                        <span class="breadcrumb-item active">Mặt hàng có từ khoá "@Session["keyword"]"</span>
+                    }
+                    else
+                    {
+                        <span class="breadcrumb-item active">Cửa hàng</span>
+                    }
+                }
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <!-- Shop Sidebar Start -->
+        <div class="col-lg-3 col-md-4">
+            <div style="margin-bottom: 10px; width: 500px">
+                <button type="button" class="btn btn-sm btn-primary" onclick="LocTimKiem()">
+                    Lọc tìm kiếm
+                </button>
+            </div>
+            <input hidden name="danhmuchidden" id="danhmuchidden" value="@ViewBag.ID_DanhMuc" />
+            <input hidden name="keyword" id="keyword" value="@Session["keyword"]" />
+            <!-- Price Start -->
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Bộ lọc theo giá</span></h5>
+            @{
+                Html.RenderAction("LoadBangGiaPartial", "NguoiDung", new { @id_danhMuc = ViewBag.ID_DanhMuc });
+            }
+            <!-- Price End -->
+            <!-- Color Start -->
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Bộ lọc theo màu</span></h5>
+            @{
+                Html.RenderAction("LoadBangMauSacPartial", "NguoiDung", new { @id_danhMuc = ViewBag.ID_DanhMuc });
+            }
+            <!-- Color End -->
+            <!-- Size Start -->
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Bộ lọc theo kích cỡ</span></h5>
+            @{
+                Html.RenderAction("LoadBangKichThuocPartial", "NguoiDung", new { @id_danhMuc = ViewBag.ID_DanhMuc });
+            }
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Bộ lọc theo giới tính</span></h5>
+            @{
+                Html.RenderAction("LoadBangGioiTinhPartial", "NguoiDung", new { @id_danhMuc = ViewBag.ID_DanhMuc });
+            }
+            <!-- Size End -->
+        </div>
+        <div class="col-lg-9 col-md-8" id="dssp">
+
+            @Html.Action("LoadDanhSachSanPhamPartial", "NguoiDung", new { @page = ViewBag.TrangHienTai, @id_danhMuc = ViewBag.ID_DanhMuc, keyword = Session["keyword"], @sort = ViewBag.SapXep })
+        </div>
+        <!-- Shop Product End -->
+    </div>
+</div>
+
+<script>
+    function LocTimKiem() {
+        var priceall = document.getElementById('price-all');
+        var countprice = document.getElementById('sl-price').value;
+        var id_price = null;
+        if (!priceall.checked) {
+            for (var i = 0; i < countprice; i++) {
+                var price = document.getElementById(`price-${i}`);
+                if (price.checked) {
+                    var id = document.getElementById(`id_price-${i}`).value;
+                    id_price = id;
+                    break;
+                }
+            }
+        }
+
+        var genderall = document.getElementById('gender-all');
+        var countgender = document.getElementById('sl-gender').value;
+        var id_gender = null;
+        if (!genderall.checked) {
+            for (var i = 0; i < countgender; i++) {
+                var gender = document.getElementById(`gender-${i}`);
+                if (gender.checked) {
+                    var id = document.getElementById(`id_gender-${i}`).value;
+                    id_gender = id;
+                    break;
+                }
+            }
+        }
+
+        var sizeall = document.getElementById('size-all');
+        var countsize = document.getElementById('sl-size').value;
+        var id_size = null;
+        if (!sizeall.checked) {
+            for (var i = 0; i < countsize; i++) {
+                var size = document.getElementById(`size-${i}`);
+                if (size.checked) {
+                    var id = document.getElementById(`id_size-${i}`).value;
+                    id_size = id;
+                    break;
+                }
+            }
+        }
+
+        var colorall = document.getElementById('color-all');
+        var countcolor = document.getElementById('sl-color').value;
+        var id_color = null;
+        if (!colorall.checked) {
+            for (var i = 0; i < countcolor; i++) {
+                var color = document.getElementById(`color-${i}`);
+                if (color.checked) {
+                    var id = document.getElementById(`id_color-${i}`).value;
+                    id_color = id;
+                    break;
+                }
+            }
+        }
+        var id_danhmuc = document.getElementById('danhmuchidden').value;
+        var keyword = document.getElementById('keyword').value;
+
+        const url = new URL('@Url.Action("BoLocSanPham", "NguoiDung")', location.origin);
+        url.searchParams.set('id_danhmuc', id_danhmuc);
+        url.searchParams.set('keyword', keyword);
+        url.searchParams.set('id_price', id_price);
+        url.searchParams.set('id_gender', id_gender);
+        url.searchParams.set('id_size', id_size);
+        url.searchParams.set('id_color', id_color);
+        $('#dssp').load(url.href);
+    }
+</script>
+

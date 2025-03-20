@@ -1,0 +1,281 @@
+﻿@model IEnumerable<CuaHangBanGiay.Models.tb_MatHang>
+@using CuaHangBanGiay.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@Html.Action("ThemMatHang", "MatHang")
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn-lg btn btn-primary me-md-2" data-toggle="modal" data-target="#modalThemMatHang">
+                                Thêm sản phẩm
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="mathang">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>@Html.DisplayNameFor(model => model.AnhMoTa)</th>
+                                    <th>@Html.DisplayNameFor(model => model.TenMatHang)</th>
+                                    <th>@Html.DisplayNameFor(model => model.tb_DanhMuc.TenDanhMuc)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Gia) (VNĐ) </th>
+                                    <th>@Html.DisplayNameFor(model => model.GiamGia) (%) </th>
+                                    <th>@Html.DisplayNameFor(model => model.SoLuongSanPham)</th>
+                                    <th>@Html.DisplayNameFor(model => model.DaBan)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Rating)</th>
+                                    <th>@Html.DisplayNameFor(model => model.NgayThem)</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model)
+                                    {
+
+                                        <tr>
+                                            <td class="col-1 align-middle text-center">@i</td>
+                                            <td class="col-1 align-middle"><img style="width:100px;height:100px" src="~/@Init.folderImageProduct@item.TenMatHang/@item.AnhMoTa" /></td>
+                                            <td class="col-1 align-middle">@Html.DisplayFor(model => item.TenMatHang)</td>
+                                            <td class="col-1 align-middle">@Html.DisplayFor(model => item.tb_DanhMuc.TenDanhMuc)</td>
+                                            <td class="col-1 align-middle">@ConvertMoney.convertMoney(item.Gia).000 </td>
+                                            <td class="col-1 align-middle text-red">@Html.DisplayFor(model => item.GiamGia)</td>
+                                            <td class="col-1 align-middle">@Html.DisplayFor(model => item.tb_SanPham.Count)</td>
+                                            <td class="col-1 align-middle">@item.tb_SanPham.Where(s=>s.TrangThai==true).Count()</td>
+                                            <td class="col-1 align-middle">@Html.DisplayFor(model => item.Rating)</td>
+                                            <td class="col-1 align-middle">@Html.DisplayFor(model => item.NgayThem)</td>
+                                            <td class="col-3 align-middle">
+                                                <button class="btn btn-primary" id="SuaMatHang-@item.ID" data-toggle="modal" data-target="#modalSuaMatHang-@item.ID">Sửa</button>
+                                                @Html.ActionLink("Chi tiết", "XemChiTiet", "MatHang", new { @id = item.ID }, new { @class = "btn btn-success" })
+                                                @*<button class="btn btn-success">Xem chi tiết</button>*@
+                                                @Html.Action("SuaMatHang", "MatHang", new { @id = item.ID })
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#modalXoaMH-@item.ID">Xóa</button>
+                                                @Html.Action("XoaMH", "MatHang", new { @id = item.ID })
+
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+
+
+<script>
+    var table1 = new DataTable('#mathang', {
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json',
+        },
+    });
+</script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+@{
+    if (Session["ThemMH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["ThemMH"]',
+
+                });
+             }
+        </script>
+        Session["ThemMH"] = null;
+    }
+    else if (Session["LoiThemMH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiThemMH"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiThemMH"] = null;
+    }
+}
+
+
+
+@{
+    if (Session["SuaMH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuaMH"]',
+
+                });
+             }
+        </script>
+        Session["SuaMH"] = null;
+    }
+    else if (Session["LoiSuaMH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiSuaMH"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiSuaMH"] = null;
+    }
+}
+
+
+
+
+@{
+    if (Session["XoaMH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["XoaMH"]',
+
+                });
+             }
+        </script>
+        Session["XoaMH"] = null;
+    }
+    else if (Session["LoiXoaMH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiXoaMH"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiXoaMH"] = null;
+    }
+}

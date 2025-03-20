@@ -1,0 +1,186 @@
+﻿@using CuaHangBanGiay.Models;
+@model IEnumerable<tb_SanPham>
+
+@{
+    var mh = (tb_MatHang)ViewBag.MH;
+}
+
+@{
+    if (Model != null)
+    {
+        <input hidden id="id_mathang" value="@mh.ID" />
+        <input hidden id="id_kichthuoc" value="@ViewBag.ID_KichThuoc" />
+        <input hidden id="id_mausac" value="@ViewBag.ID_MauSac" />
+        <input hidden id="id_gioitinh" value="@ViewBag.ID_GioiTinh" />
+        <div class="d-flex mb-3">
+            <strong class="text-dark mr-3">Kích cỡ:</strong>
+            @{
+                for (int i = 0; i < mh.tb_SizeMatHang.Count; i++)
+                {
+                    <div class="custom-control custom-radio custom-control-inline">
+                        @if (mh.tb_SizeMatHang.ElementAt(i).ID == ViewBag.ID_KichThuoc)
+                        {
+                            <input type="radio" class="custom-control-input" id="size-@i" checked name="size">
+                        }
+                        else
+                        {
+                            <input type="radio" class="custom-control-input" id="size-@i" name="size" value="@mh.tb_SizeMatHang.ElementAt(i).ID" onclick="LocKichThuoc1SP(this)">
+                        }
+
+                        <label class="custom-control-label" for="size-@i">@mh.tb_SizeMatHang.ElementAt(i).tb_BangKichThuoc.KichThuoc</label>
+                    </div>
+                }
+            }
+        </div>
+        <div class="d-flex mb-4">
+            <strong class="text-dark mr-3">Màu sắc:</strong>
+            @{
+                for (int i = 0; i < mh.tb_MauMatHang.Count; i++)
+                {
+                    <div class="custom-control custom-radio custom-control-inline">
+                        @if (mh.tb_MauMatHang.ElementAt(i).ID == ViewBag.ID_MauSac)
+                        {
+                            <input type="radio" class="custom-control-input" id="color-@i" checked name="color">
+                        }
+                        else
+                        {
+                            <input type="radio" class="custom-control-input" id="color-@i" name="color" value="@mh.tb_MauMatHang.ElementAt(i).ID" onclick="LocMauSac1SP(this)">
+                        }
+
+                        <label class="custom-control-label" for="color-@i">@mh.tb_MauMatHang.ElementAt(i).tb_BangMauSP.MauSac</label>
+                    </div>
+                }
+            }
+        </div>
+        <div class="d-flex mb-4">
+            <strong class="text-dark mr-3">Giới tính:</strong>
+            @{
+                for (int i = 0; i < mh.tb_GioiTinhMatHang.Count; i++)
+                {
+                    <div class="custom-control custom-radio custom-control-inline">
+                        @if (mh.tb_GioiTinhMatHang.ElementAt(i).ID == ViewBag.ID_GioiTinh)
+                        {
+                            <input type="radio" class="custom-control-input" id="gender-@i" checked name="gender">
+                        }
+                        else
+                        {
+                            <input type="radio" class="custom-control-input" id="gender-@i" name="gender" value="@mh.tb_GioiTinhMatHang.ElementAt(i).ID" onclick="LocGioiTinh1SP(this)">
+                        }
+                        <label class="custom-control-label" for="gender-@i">@mh.tb_GioiTinhMatHang.ElementAt(i).tb_BangGioiTinh.GioiTinh</label>
+                    </div>
+                }
+            }
+        </div>
+        <div class="d-flex align-items-center mb-4 pt-2">
+
+            @{
+                var sl = Init.getSoLuongHTvaMaxSP(mh.ID, Model, ViewBag.ID_KichThuoc, ViewBag.ID_MauSac, ViewBag.ID_GioiTinh, Session["GioHang"] == null ? new Giohang() : (Giohang)Session["GioHang"]);
+                var maxslsp = Model.Count();
+                if (maxslsp != 0)
+                {
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-minus" id="btnGiam" onclick="GiamSP()">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="soluong" class="form-control bg-secondary border-0 text-center" value="@sl.Item1">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary btn-plus" id="btnTang" onclick="TangSP(@sl.Item2)">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary px-3" id="themvaogio" onclick="ThemVaoGioSoLuong(@mh.ID, @sl.Item2)"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ</button>
+                }
+                else
+                {
+                    <h5 style="color: cadetblue"><b>Đã hết hàng</b></h5>
+                }
+            }
+        </div>
+    }
+}
+
+<script>
+    function LocKichThuoc1SP(input) {
+        var value = input.value;
+        var id_mathang = document.getElementById('id_mathang').value;
+        var id_mausac = document.getElementById('id_mausac').value;
+        var id_gioitinh = document.getElementById('id_gioitinh').value;
+        const url = new URL('@Url.Action("LoadThongSoSanPhamPartial", "NguoiDung")', location.origin);
+        url.searchParams.set('id_matHang', id_mathang);
+        url.searchParams.set('id_kichthuoc', value);
+        url.searchParams.set('id_mausac', id_mausac);
+        url.searchParams.set('id_gioitinh', id_gioitinh);
+        $('#dstssp').load(url.href);
+    }
+    function LocMauSac1SP(input) {
+        var value = input.value;
+        var id_mathang = document.getElementById('id_mathang').value;
+        var id_kichthuoc = document.getElementById('id_kichthuoc').value;
+        var id_gioitinh = document.getElementById('id_gioitinh').value;
+        const url = new URL('@Url.Action("LoadThongSoSanPhamPartial", "NguoiDung")', location.origin);
+        url.searchParams.set('id_matHang', id_mathang);
+        url.searchParams.set('id_kichthuoc', id_kichthuoc);
+        url.searchParams.set('id_mausac', value);
+        url.searchParams.set('id_gioitinh', id_gioitinh);
+        $('#dstssp').load(url.href);
+    }
+    function LocGioiTinh1SP(input) {
+        var value = input.value;
+        var id_mathang = document.getElementById('id_mathang').value;
+        var id_kichthuoc = document.getElementById('id_kichthuoc').value;
+        var id_mausac = document.getElementById('id_mausac').value;
+        const url = new URL('@Url.Action("LoadThongSoSanPhamPartial", "NguoiDung")', location.origin);
+        url.searchParams.set('id_matHang', id_mathang);
+        url.searchParams.set('id_kichthuoc', id_kichthuoc);
+        url.searchParams.set('id_mausac', id_mausac);
+        url.searchParams.set('id_gioitinh', value);
+        $('#dstssp').load(url.href);
+    }
+    function GiamSP() {
+        var input = document.getElementById('soluong');
+        if (input.value > 1) {
+            input.value--;
+        }
+    }
+    function TangSP(max) {
+        var input = document.getElementById('soluong');
+        if (input.value < max) {
+            input.value++;
+        }
+    }
+    function ThemVaoGioSoLuong(id_matHang, max) {
+        var input = document.getElementById('soluong');
+        var id_kichthuoc = document.getElementById('id_kichthuoc').value;
+        var id_mausac = document.getElementById('id_mausac').value;
+        var id_gioitinh = document.getElementById('id_gioitinh').value;
+
+        var newValue = max - input.value;
+        const url = new URL('@Url.Action("ThemGioHang", "NguoiDung")', location.origin);
+        url.searchParams.set('id_matHang', id_matHang);
+        url.searchParams.set('id_kichthuoc', id_kichthuoc);
+        url.searchParams.set('id_mausac', id_mausac);
+        url.searchParams.set('id_gioitinh', id_gioitinh);
+        url.searchParams.set('soluong', input.value);
+        $('#giohangVaYeuThich').load(url.href);
+        toastMixin.fire({
+                animation: true,
+                title: `Đã thêm ${input.value} sản phẩm vào giỏ hàng`,
+                icon: 'success'
+        });
+        if (input.value > newValue) {
+            input.value = newValue;
+        }
+        console.log(input.value + ':' + max + ':' + newValue);
+        document.getElementById("btnTang").onclick = function () {
+            TangSP(newValue);
+        }
+        document.getElementById("themvaogio").onclick = function () {
+            ThemVaoGioSoLuong(id_matHang, newValue)
+        };
+
+    }
+</script>
+

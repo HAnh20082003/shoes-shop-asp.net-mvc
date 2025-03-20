@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoesShop1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tb_Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDangNhap" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MatKhau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="HoTen" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tb_AnhMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_MatHang" Type="Int32" />
+    <Property Name="DuongDanAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_AnhMat__ID_Ma__5AEE82B9" FromRole="tb_AnhMatHang" ToRole="tb_MatHang" />
+  </EntityType>
+  <EntityType Name="tb_BangGiaShip">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MinThanhTien" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="MaxThanhTien" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Phi" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="tb_BangGiaSP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MinGia" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="MaxGia" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="tb_BangGioiTinh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GioiTinh" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_GioiTinhMatHang" Relationship="Self.FK__tb_GioiTi__ID_Gi__66603565" FromRole="tb_BangGioiTinh" ToRole="tb_GioiTinhMatHang" />
+    <NavigationProperty Name="tb_MoTaDonHang" Relationship="Self.FK__tb_MoTaDo__ID_Gi__778AC167" FromRole="tb_BangGioiTinh" ToRole="tb_MoTaDonHang" />
+  </EntityType>
+  <EntityType Name="tb_BangKichThuoc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KichThuoc" Type="Double" />
+    <NavigationProperty Name="tb_MoTaDonHang" Relationship="Self.FK__tb_MoTaDo__ID_Ki__75A278F5" FromRole="tb_BangKichThuoc" ToRole="tb_MoTaDonHang" />
+    <NavigationProperty Name="tb_SizeMatHang" Relationship="Self.FK__tb_SizeMa__ID_Ki__5EBF139D" FromRole="tb_BangKichThuoc" ToRole="tb_SizeMatHang" />
+  </EntityType>
+  <EntityType Name="tb_BangMauSP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MauSac" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_MauMatHang" Relationship="Self.FK__tb_MauMat__ID_Ma__628FA481" FromRole="tb_BangMauSP" ToRole="tb_MauMatHang" />
+    <NavigationProperty Name="tb_MoTaDonHang" Relationship="Self.FK__tb_MoTaDo__ID_Ma__76969D2E" FromRole="tb_BangMauSP" ToRole="tb_MoTaDonHang" />
+  </EntityType>
+  <EntityType Name="tb_Banner">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AnhBanner" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tb_ChiTietDonMuaHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_MoTaDonHang" Type="Int32" />
+    <Property Name="ID_SanPham" Type="Int32" />
+    <NavigationProperty Name="tb_MoTaDonHang" Relationship="Self.FK__tb_ChiTie__ID_Mo__7A672E12" FromRole="tb_ChiTietDonMuaHang" ToRole="tb_MoTaDonHang" />
+    <NavigationProperty Name="tb_SanPham" Relationship="Self.FK__tb_ChiTie__ID_Sa__7B5B524B" FromRole="tb_ChiTietDonMuaHang" ToRole="tb_SanPham" />
+  </EntityType>
+  <EntityType Name="tb_DanhGiaTraiNghiem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_NguoiDung" Type="Int32" />
+    <Property Name="ID_MatHang" Type="Int32" />
+    <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="Double" />
+    <Property Name="NgayDanhGia" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_DanhGi__ID_Ma__7F2BE32F" FromRole="tb_DanhGiaTraiNghiem" ToRole="tb_MatHang" />
+    <NavigationProperty Name="tb_NguoiDung" Relationship="Self.FK__tb_DanhGi__ID_Ng__7E37BEF6" FromRole="tb_DanhGiaTraiNghiem" ToRole="tb_NguoiDung" />
+  </EntityType>
+  <EntityType Name="tb_DanhMuc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDanhMuc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SoLuongMatHang" Type="Int32" />
+    <Property Name="AnhMoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_MatHan__ID_Da__5629CD9C" FromRole="tb_DanhMuc" ToRole="tb_MatHang" />
+  </EntityType>
+  <EntityType Name="tb_DonMuaHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_NguoiDung" Type="Int32" />
+    <Property Name="TrangThai" Type="Int32" />
+    <Property Name="HoTen" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="DiaChiGiaoHang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NhaRieng" Type="Boolean" />
+    <Property Name="NgayDat" Type="DateTime" Precision="3" />
+    <Property Name="NgayDuyet" Type="DateTime" Precision="3" />
+    <Property Name="NgayDuKien" Type="DateTime" Precision="3" />
+    <Property Name="TongTien" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TienShip" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TongCong" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="HinhThucTT" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_NguoiDung" Relationship="Self.FK__tb_DonMua__ID_Ng__70DDC3D8" FromRole="tb_DonMuaHang" ToRole="tb_NguoiDung" />
+    <NavigationProperty Name="tb_MoTaDonHang" Relationship="Self.FK__tb_MoTaDo__ID_Do__73BA3083" FromRole="tb_DonMuaHang" ToRole="tb_MoTaDonHang" />
+  </EntityType>
+  <EntityType Name="tb_GioiTinhMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_MatHang" Type="Int32" />
+    <Property Name="ID_GioiTinh" Type="Int32" />
+    <NavigationProperty Name="tb_BangGioiTinh" Relationship="Self.FK__tb_GioiTi__ID_Gi__66603565" FromRole="tb_GioiTinhMatHang" ToRole="tb_BangGioiTinh" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_GioiTi__ID_Ma__656C112C" FromRole="tb_GioiTinhMatHang" ToRole="tb_MatHang" />
+    <NavigationProperty Name="tb_SanPham" Relationship="Self.FK__tb_SanPha__ID_Gi__6C190EBB" FromRole="tb_GioiTinhMatHang" ToRole="tb_SanPham" />
+  </EntityType>
+  <EntityType Name="tb_MatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_DanhMuc" Type="Int32" />
+    <Property Name="TenMatHang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Gia" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SoLuongSanPham" Type="Int32" />
+    <Property Name="DaBan" Type="Int32" />
+    <Property Name="GiamGia" Type="Int32" />
+    <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnhMoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="Double" />
+    <Property Name="NgayThem" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tb_AnhMatHang" Relationship="Self.FK__tb_AnhMat__ID_Ma__5AEE82B9" FromRole="tb_MatHang" ToRole="tb_AnhMatHang" />
+    <NavigationProperty Name="tb_DanhGiaTraiNghiem" Relationship="Self.FK__tb_DanhGi__ID_Ma__7F2BE32F" FromRole="tb_MatHang" ToRole="tb_DanhGiaTraiNghiem" />
+    <NavigationProperty Name="tb_DanhMuc" Relationship="Self.FK__tb_MatHan__ID_Da__5629CD9C" FromRole="tb_MatHang" ToRole="tb_DanhMuc" />
+    <NavigationProperty Name="tb_GioiTinhMatHang" Relationship="Self.FK__tb_GioiTi__ID_Ma__656C112C" FromRole="tb_MatHang" ToRole="tb_GioiTinhMatHang" />
+    <NavigationProperty Name="tb_MauMatHang" Relationship="Self.FK__tb_MauMat__ID_Ma__619B8048" FromRole="tb_MatHang" ToRole="tb_MauMatHang" />
+    <NavigationProperty Name="tb_MoTaDonHang" Relationship="Self.FK__tb_MoTaDo__ID_Ma__74AE54BC" FromRole="tb_MatHang" ToRole="tb_MoTaDonHang" />
+    <NavigationProperty Name="tb_SanPham" Relationship="Self.FK__tb_SanPha__ID_Ma__693CA210" FromRole="tb_MatHang" ToRole="tb_SanPham" />
+    <NavigationProperty Name="tb_SizeMatHang" Relationship="Self.FK__tb_SizeMa__ID_Ma__5DCAEF64" FromRole="tb_MatHang" ToRole="tb_SizeMatHang" />
+  </EntityType>
+  <EntityType Name="tb_MauMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_MatHang" Type="Int32" />
+    <Property Name="ID_MauSac" Type="Int32" />
+    <NavigationProperty Name="tb_BangMauSP" Relationship="Self.FK__tb_MauMat__ID_Ma__628FA481" FromRole="tb_MauMatHang" ToRole="tb_BangMauSP" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_MauMat__ID_Ma__619B8048" FromRole="tb_MauMatHang" ToRole="tb_MatHang" />
+    <NavigationProperty Name="tb_SanPham" Relationship="Self.FK__tb_SanPha__ID_Ma__6B24EA82" FromRole="tb_MauMatHang" ToRole="tb_SanPham" />
+  </EntityType>
+  <EntityType Name="tb_MoTaDonHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_DonMuaHang" Type="Int32" />
+    <Property Name="ID_MatHang" Type="Int32" />
+    <Property Name="ID_KichCo" Type="Int32" />
+    <Property Name="ID_MauSac" Type="Int32" />
+    <Property Name="ID_GioiTinh" Type="Int32" />
+    <Property Name="Gia" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="GiamGia" Type="Int32" />
+    <Property Name="SoLuong" Type="Int32" />
+    <Property Name="ThanhTien" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="tb_BangGioiTinh" Relationship="Self.FK__tb_MoTaDo__ID_Gi__778AC167" FromRole="tb_MoTaDonHang" ToRole="tb_BangGioiTinh" />
+    <NavigationProperty Name="tb_BangKichThuoc" Relationship="Self.FK__tb_MoTaDo__ID_Ki__75A278F5" FromRole="tb_MoTaDonHang" ToRole="tb_BangKichThuoc" />
+    <NavigationProperty Name="tb_BangMauSP" Relationship="Self.FK__tb_MoTaDo__ID_Ma__76969D2E" FromRole="tb_MoTaDonHang" ToRole="tb_BangMauSP" />
+    <NavigationProperty Name="tb_ChiTietDonMuaHang" Relationship="Self.FK__tb_ChiTie__ID_Mo__7A672E12" FromRole="tb_MoTaDonHang" ToRole="tb_ChiTietDonMuaHang" />
+    <NavigationProperty Name="tb_DonMuaHang" Relationship="Self.FK__tb_MoTaDo__ID_Do__73BA3083" FromRole="tb_MoTaDonHang" ToRole="tb_DonMuaHang" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_MoTaDo__ID_Ma__74AE54BC" FromRole="tb_MoTaDonHang" ToRole="tb_MatHang" />
+  </EntityType>
+  <EntityType Name="tb_NguoiDung">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenDangNhap" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="MatKhau" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TenHienThi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="GioiTinh" Type="Int32" />
+    <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+    <Property Name="DiaChi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnhDaiDien" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TrangThai" Type="Boolean" />
+    <NavigationProperty Name="tb_DanhGiaTraiNghiem" Relationship="Self.FK__tb_DanhGi__ID_Ng__7E37BEF6" FromRole="tb_NguoiDung" ToRole="tb_DanhGiaTraiNghiem" />
+    <NavigationProperty Name="tb_DonMuaHang" Relationship="Self.FK__tb_DonMua__ID_Ng__70DDC3D8" FromRole="tb_NguoiDung" ToRole="tb_DonMuaHang" />
+  </EntityType>
+  <EntityType Name="tb_SanPham">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_MatHang" Type="Int32" />
+    <Property Name="ID_KichCo" Type="Int32" />
+    <Property Name="ID_MauSac" Type="Int32" />
+    <Property Name="ID_GioiTinh" Type="Int32" />
+    <Property Name="TrangThai" Type="Boolean" />
+    <NavigationProperty Name="tb_ChiTietDonMuaHang" Relationship="Self.FK__tb_ChiTie__ID_Sa__7B5B524B" FromRole="tb_SanPham" ToRole="tb_ChiTietDonMuaHang" />
+    <NavigationProperty Name="tb_GioiTinhMatHang" Relationship="Self.FK__tb_SanPha__ID_Gi__6C190EBB" FromRole="tb_SanPham" ToRole="tb_GioiTinhMatHang" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_SanPha__ID_Ma__693CA210" FromRole="tb_SanPham" ToRole="tb_MatHang" />
+    <NavigationProperty Name="tb_MauMatHang" Relationship="Self.FK__tb_SanPha__ID_Ma__6B24EA82" FromRole="tb_SanPham" ToRole="tb_MauMatHang" />
+    <NavigationProperty Name="tb_SizeMatHang" Relationship="Self.FK__tb_SanPha__ID_Ki__6A30C649" FromRole="tb_SanPham" ToRole="tb_SizeMatHang" />
+  </EntityType>
+  <EntityType Name="tb_SizeMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_MatHang" Type="Int32" />
+    <Property Name="ID_KichThuoc" Type="Int32" />
+    <NavigationProperty Name="tb_BangKichThuoc" Relationship="Self.FK__tb_SizeMa__ID_Ki__5EBF139D" FromRole="tb_SizeMatHang" ToRole="tb_BangKichThuoc" />
+    <NavigationProperty Name="tb_MatHang" Relationship="Self.FK__tb_SizeMa__ID_Ma__5DCAEF64" FromRole="tb_SizeMatHang" ToRole="tb_MatHang" />
+    <NavigationProperty Name="tb_SanPham" Relationship="Self.FK__tb_SanPha__ID_Ki__6A30C649" FromRole="tb_SizeMatHang" ToRole="tb_SanPham" />
+  </EntityType>
+  <Association Name="FK__tb_AnhMat__ID_Ma__5AEE82B9">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_AnhMatHang" Type="Self.tb_AnhMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_AnhMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_GioiTi__ID_Gi__66603565">
+    <End Role="tb_BangGioiTinh" Type="Self.tb_BangGioiTinh" Multiplicity="0..1" />
+    <End Role="tb_GioiTinhMatHang" Type="Self.tb_GioiTinhMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangGioiTinh">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_GioiTinhMatHang">
+        <PropertyRef Name="ID_GioiTinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Gi__778AC167">
+    <End Role="tb_BangGioiTinh" Type="Self.tb_BangGioiTinh" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangGioiTinh">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_GioiTinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Ki__75A278F5">
+    <End Role="tb_BangKichThuoc" Type="Self.tb_BangKichThuoc" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangKichThuoc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_KichCo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SizeMa__ID_Ki__5EBF139D">
+    <End Role="tb_BangKichThuoc" Type="Self.tb_BangKichThuoc" Multiplicity="0..1" />
+    <End Role="tb_SizeMatHang" Type="Self.tb_SizeMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangKichThuoc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SizeMatHang">
+        <PropertyRef Name="ID_KichThuoc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MauMat__ID_Ma__628FA481">
+    <End Role="tb_BangMauSP" Type="Self.tb_BangMauSP" Multiplicity="0..1" />
+    <End Role="tb_MauMatHang" Type="Self.tb_MauMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangMauSP">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MauMatHang">
+        <PropertyRef Name="ID_MauSac" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Ma__76969D2E">
+    <End Role="tb_BangMauSP" Type="Self.tb_BangMauSP" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangMauSP">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_MauSac" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ChiTie__ID_Mo__7A672E12">
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="0..1" />
+    <End Role="tb_ChiTietDonMuaHang" Type="Self.tb_ChiTietDonMuaHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ChiTietDonMuaHang">
+        <PropertyRef Name="ID_MoTaDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ChiTie__ID_Sa__7B5B524B">
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="0..1" />
+    <End Role="tb_ChiTietDonMuaHang" Type="Self.tb_ChiTietDonMuaHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_SanPham">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ChiTietDonMuaHang">
+        <PropertyRef Name="ID_SanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_DanhGi__ID_Ma__7F2BE32F">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_DanhGiaTraiNghiem" Type="Self.tb_DanhGiaTraiNghiem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_DanhGiaTraiNghiem">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_DanhGi__ID_Ng__7E37BEF6">
+    <End Role="tb_NguoiDung" Type="Self.tb_NguoiDung" Multiplicity="0..1" />
+    <End Role="tb_DanhGiaTraiNghiem" Type="Self.tb_DanhGiaTraiNghiem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_NguoiDung">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_DanhGiaTraiNghiem">
+        <PropertyRef Name="ID_NguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MatHan__ID_Da__5629CD9C">
+    <End Role="tb_DanhMuc" Type="Self.tb_DanhMuc" Multiplicity="0..1" />
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_DanhMuc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MatHang">
+        <PropertyRef Name="ID_DanhMuc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_DonMua__ID_Ng__70DDC3D8">
+    <End Role="tb_NguoiDung" Type="Self.tb_NguoiDung" Multiplicity="0..1" />
+    <End Role="tb_DonMuaHang" Type="Self.tb_DonMuaHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_NguoiDung">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_DonMuaHang">
+        <PropertyRef Name="ID_NguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Do__73BA3083">
+    <End Role="tb_DonMuaHang" Type="Self.tb_DonMuaHang" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_DonMuaHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_DonMuaHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_GioiTi__ID_Ma__656C112C">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_GioiTinhMatHang" Type="Self.tb_GioiTinhMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_GioiTinhMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Gi__6C190EBB">
+    <End Role="tb_GioiTinhMatHang" Type="Self.tb_GioiTinhMatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_GioiTinhMatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_GioiTinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MauMat__ID_Ma__619B8048">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_MauMatHang" Type="Self.tb_MauMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MauMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Ma__74AE54BC">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Ma__693CA210">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SizeMa__ID_Ma__5DCAEF64">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_SizeMatHang" Type="Self.tb_SizeMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SizeMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Ma__6B24EA82">
+    <End Role="tb_MauMatHang" Type="Self.tb_MauMatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MauMatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_MauSac" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Ki__6A30C649">
+    <End Role="tb_SizeMatHang" Type="Self.tb_SizeMatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_SizeMatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_KichCo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShoesShopEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tb_Admin" EntityType="Self.tb_Admin" />
+    <EntitySet Name="tb_AnhMatHang" EntityType="Self.tb_AnhMatHang" />
+    <EntitySet Name="tb_BangGiaShip" EntityType="Self.tb_BangGiaShip" />
+    <EntitySet Name="tb_BangGiaSP" EntityType="Self.tb_BangGiaSP" />
+    <EntitySet Name="tb_BangGioiTinh" EntityType="Self.tb_BangGioiTinh" />
+    <EntitySet Name="tb_BangKichThuoc" EntityType="Self.tb_BangKichThuoc" />
+    <EntitySet Name="tb_BangMauSP" EntityType="Self.tb_BangMauSP" />
+    <EntitySet Name="tb_Banner" EntityType="Self.tb_Banner" />
+    <EntitySet Name="tb_ChiTietDonMuaHang" EntityType="Self.tb_ChiTietDonMuaHang" />
+    <EntitySet Name="tb_DanhGiaTraiNghiem" EntityType="Self.tb_DanhGiaTraiNghiem" />
+    <EntitySet Name="tb_DanhMuc" EntityType="Self.tb_DanhMuc" />
+    <EntitySet Name="tb_DonMuaHang" EntityType="Self.tb_DonMuaHang" />
+    <EntitySet Name="tb_GioiTinhMatHang" EntityType="Self.tb_GioiTinhMatHang" />
+    <EntitySet Name="tb_MatHang" EntityType="Self.tb_MatHang" />
+    <EntitySet Name="tb_MauMatHang" EntityType="Self.tb_MauMatHang" />
+    <EntitySet Name="tb_MoTaDonHang" EntityType="Self.tb_MoTaDonHang" />
+    <EntitySet Name="tb_NguoiDung" EntityType="Self.tb_NguoiDung" />
+    <EntitySet Name="tb_SanPham" EntityType="Self.tb_SanPham" />
+    <EntitySet Name="tb_SizeMatHang" EntityType="Self.tb_SizeMatHang" />
+    <AssociationSet Name="FK__tb_AnhMat__ID_Ma__5AEE82B9" Association="Self.FK__tb_AnhMat__ID_Ma__5AEE82B9">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_AnhMatHang" EntitySet="tb_AnhMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_GioiTi__ID_Gi__66603565" Association="Self.FK__tb_GioiTi__ID_Gi__66603565">
+      <End Role="tb_BangGioiTinh" EntitySet="tb_BangGioiTinh" />
+      <End Role="tb_GioiTinhMatHang" EntitySet="tb_GioiTinhMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Gi__778AC167" Association="Self.FK__tb_MoTaDo__ID_Gi__778AC167">
+      <End Role="tb_BangGioiTinh" EntitySet="tb_BangGioiTinh" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Ki__75A278F5" Association="Self.FK__tb_MoTaDo__ID_Ki__75A278F5">
+      <End Role="tb_BangKichThuoc" EntitySet="tb_BangKichThuoc" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SizeMa__ID_Ki__5EBF139D" Association="Self.FK__tb_SizeMa__ID_Ki__5EBF139D">
+      <End Role="tb_BangKichThuoc" EntitySet="tb_BangKichThuoc" />
+      <End Role="tb_SizeMatHang" EntitySet="tb_SizeMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MauMat__ID_Ma__628FA481" Association="Self.FK__tb_MauMat__ID_Ma__628FA481">
+      <End Role="tb_BangMauSP" EntitySet="tb_BangMauSP" />
+      <End Role="tb_MauMatHang" EntitySet="tb_MauMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Ma__76969D2E" Association="Self.FK__tb_MoTaDo__ID_Ma__76969D2E">
+      <End Role="tb_BangMauSP" EntitySet="tb_BangMauSP" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ChiTie__ID_Mo__7A672E12" Association="Self.FK__tb_ChiTie__ID_Mo__7A672E12">
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+      <End Role="tb_ChiTietDonMuaHang" EntitySet="tb_ChiTietDonMuaHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ChiTie__ID_Sa__7B5B524B" Association="Self.FK__tb_ChiTie__ID_Sa__7B5B524B">
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+      <End Role="tb_ChiTietDonMuaHang" EntitySet="tb_ChiTietDonMuaHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_DanhGi__ID_Ma__7F2BE32F" Association="Self.FK__tb_DanhGi__ID_Ma__7F2BE32F">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_DanhGiaTraiNghiem" EntitySet="tb_DanhGiaTraiNghiem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_DanhGi__ID_Ng__7E37BEF6" Association="Self.FK__tb_DanhGi__ID_Ng__7E37BEF6">
+      <End Role="tb_NguoiDung" EntitySet="tb_NguoiDung" />
+      <End Role="tb_DanhGiaTraiNghiem" EntitySet="tb_DanhGiaTraiNghiem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MatHan__ID_Da__5629CD9C" Association="Self.FK__tb_MatHan__ID_Da__5629CD9C">
+      <End Role="tb_DanhMuc" EntitySet="tb_DanhMuc" />
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_DonMua__ID_Ng__70DDC3D8" Association="Self.FK__tb_DonMua__ID_Ng__70DDC3D8">
+      <End Role="tb_NguoiDung" EntitySet="tb_NguoiDung" />
+      <End Role="tb_DonMuaHang" EntitySet="tb_DonMuaHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Do__73BA3083" Association="Self.FK__tb_MoTaDo__ID_Do__73BA3083">
+      <End Role="tb_DonMuaHang" EntitySet="tb_DonMuaHang" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_GioiTi__ID_Ma__656C112C" Association="Self.FK__tb_GioiTi__ID_Ma__656C112C">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_GioiTinhMatHang" EntitySet="tb_GioiTinhMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Gi__6C190EBB" Association="Self.FK__tb_SanPha__ID_Gi__6C190EBB">
+      <End Role="tb_GioiTinhMatHang" EntitySet="tb_GioiTinhMatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MauMat__ID_Ma__619B8048" Association="Self.FK__tb_MauMat__ID_Ma__619B8048">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_MauMatHang" EntitySet="tb_MauMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Ma__74AE54BC" Association="Self.FK__tb_MoTaDo__ID_Ma__74AE54BC">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Ma__693CA210" Association="Self.FK__tb_SanPha__ID_Ma__693CA210">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SizeMa__ID_Ma__5DCAEF64" Association="Self.FK__tb_SizeMa__ID_Ma__5DCAEF64">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_SizeMatHang" EntitySet="tb_SizeMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Ma__6B24EA82" Association="Self.FK__tb_SanPha__ID_Ma__6B24EA82">
+      <End Role="tb_MauMatHang" EntitySet="tb_MauMatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Ki__6A30C649" Association="Self.FK__tb_SanPha__ID_Ki__6A30C649">
+      <End Role="tb_SizeMatHang" EntitySet="tb_SizeMatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/BootstrapLogin/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/BootstrapLogin/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/BootstrapLogin/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/BootstrapLogin/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/BootstrapLogin/css/main.css?v=1">
+<!--===============================================================================================-->
+<div class="limiter" style="background-color:white">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-pic js-tilt" data-tilt>
+                <img src="~/BootstrapLogin/images/img-01.png" alt="IMG">
+            </div>
+
+            <div class="login100-form validate-form text-xl-center">
+                <h4>
+                    Đăng nhập tài khoản
+                </h4>
+                <br />
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="tendn" id="tendn" placeholder="Điền tên đăng nhập">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="password" name="matkhau" id="matkhau" placeholder="Điền mật khẩu">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" onclick="Login()">
+                        Đăng nhập
+                    </button>
+                </div>
+
+                <div class="text-center p-t-12">
+                    <span class="txt">
+                        Quên mật khẩu
+                    </span>
+                </div>
+
+                <div class="text-center p-t-136">
+                    <a class="txt" href="@Url.Action("DangKy", "NguoiDung")">
+                        Đăng ký tài khoản mới
+                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===============================================================================================-->
+<script src="~/BootstrapLogin/vendor/bootstrap/js/popper.js"></script>
+<script src="~/BootstrapLogin/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/BootstrapLogin/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/BootstrapLogin/vendor/tilt/tilt.jquery.min.js"></script>
+<script>
+		$('.js-tilt').tilt({
+			scale: 1.1
+        })
+    function Login() {
+        var tendn = document.getElementById('tendn').value;
+        var matkhau = document.getElementById('matkhau').value;
+        if (tendn == null || tendn == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Tên đăng nhập không được để trống',
+                icon: 'error'
+                });
+        }
+        else if (matkhau == null || matkhau == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Mật khẩu không được để trống',
+                icon: 'error'
+                });
+        }
+        else {
+            const url = new URL('@Url.Action("KiemTraDangNhap", "NguoiDung")', location.origin);
+            url.searchParams.set('tendn', tendn);
+            url.searchParams.set('matkhau', matkhau);
+            window.location = url.href;
+        }
+    }
+
+</script>
+<!--===============================================================================================-->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-left',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+</script>
+
+
+@{
+    if (Session["ErrorLogin"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["ErrorLogin"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["ErrorLogin"] = null;
+    }
+    if (Session["SuccessDangKy"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuccessDangKy"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["SuccessDangKy"] = null;
+    }
+}

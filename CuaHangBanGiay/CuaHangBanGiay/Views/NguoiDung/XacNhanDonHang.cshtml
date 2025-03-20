@@ -1,0 +1,46 @@
+﻿@using CuaHangBanGiay.Models;
+@{
+    ViewBag.Title = "XacNhanDonHang";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<div style="width: 500px; min-height: 500px; margin-left: auto; margin-right: auto">
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px">
+        <div class="col-lg-12">
+            <h2 style="color: darkslateblue">@ViewBag.MessageError</h2>
+            <h2 style="color: darkslateblue">@ViewBag.MessageSuccess</h2>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px">
+        <div class="col-lg-12">
+            <h5 style="color: darkslateblue">Mã website: <strong style="color: black">@ViewBag.MaWeb</strong></h5>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px">
+        <div class="col-lg-12">
+            <h5 style="color: darkslateblue">Mã giao dịch: <strong style="color: black">@ViewBag.MaGD</strong></h5>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px">
+        <div class="col-lg-12">
+            <h5 style="color: darkslateblue">Mã giao dịch VNPAY: <strong style="color: black">@ViewBag.MaGDVNPAY</strong></h5>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px">
+        <div class="col-lg-12">
+            <h5 style="color: darkslateblue">Phí giao dịch: <strong style="color: black">@ConvertMoney.convertMoney(ViewBag.SoTien)<span>VNĐ</span></strong></h5>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px">
+        <div class="col-lg-12">
+            <h5 style="color: darkslateblue">Ngân hàng thanh toán: <strong style="color: black">@ViewBag.NganHang</strong></h5>
+        </div>
+    </div>
+    <a class="btn btn-primary px-3" href="@Url.Action("GioHang","NguoiDung")">Quay lại giỏ hàng</a>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,567 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoesShop1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tb_Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenDangNhap" Type="nvarchar" MaxLength="100" />
+    <Property Name="MatKhau" Type="nvarchar" MaxLength="100" />
+    <Property Name="HoTen" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tb_AnhMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_MatHang" Type="int" />
+    <Property Name="DuongDanAnh" Type="ntext" />
+  </EntityType>
+  <EntityType Name="tb_BangGiaShip">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MinThanhTien" Type="money" />
+    <Property Name="MaxThanhTien" Type="money" />
+    <Property Name="Phi" Type="money" />
+  </EntityType>
+  <EntityType Name="tb_BangGiaSP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MinGia" Type="money" />
+    <Property Name="MaxGia" Type="money" />
+  </EntityType>
+  <EntityType Name="tb_BangGioiTinh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GioiTinh" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tb_BangKichThuoc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KichThuoc" Type="float" />
+  </EntityType>
+  <EntityType Name="tb_BangMauSP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MauSac" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="tb_Banner">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AnhBanner" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="tb_ChiTietDonMuaHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_MoTaDonHang" Type="int" />
+    <Property Name="ID_SanPham" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_DanhGiaTraiNghiem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_NguoiDung" Type="int" />
+    <Property Name="ID_MatHang" Type="int" />
+    <Property Name="NoiDung" Type="ntext" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="NgayDanhGia" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tb_DanhMuc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenDanhMuc" Type="nvarchar" MaxLength="100" />
+    <Property Name="SoLuongMatHang" Type="int" />
+    <Property Name="AnhMoTa" Type="ntext" />
+  </EntityType>
+  <EntityType Name="tb_DonMuaHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_NguoiDung" Type="int" />
+    <Property Name="TrangThai" Type="int" />
+    <Property Name="HoTen" Type="nvarchar" MaxLength="200" />
+    <Property Name="SDT" Type="varchar" MaxLength="12" />
+    <Property Name="DiaChiGiaoHang" Type="ntext" />
+    <Property Name="NhaRieng" Type="bit" />
+    <Property Name="NgayDat" Type="datetime" />
+    <Property Name="NgayDuyet" Type="datetime" />
+    <Property Name="NgayDuKien" Type="datetime" />
+    <Property Name="TongTien" Type="money" />
+    <Property Name="TienShip" Type="money" />
+    <Property Name="TongCong" Type="money" />
+    <Property Name="HinhThucTT" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="tb_GioiTinhMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_MatHang" Type="int" />
+    <Property Name="ID_GioiTinh" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_MatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_DanhMuc" Type="int" />
+    <Property Name="TenMatHang" Type="nvarchar" MaxLength="100" />
+    <Property Name="Gia" Type="money" />
+    <Property Name="SoLuongSanPham" Type="int" />
+    <Property Name="DaBan" Type="int" />
+    <Property Name="GiamGia" Type="int" />
+    <Property Name="MoTa" Type="ntext" />
+    <Property Name="AnhMoTa" Type="ntext" />
+    <Property Name="Rating" Type="float" />
+    <Property Name="NgayThem" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tb_MauMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_MatHang" Type="int" />
+    <Property Name="ID_MauSac" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_MoTaDonHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_DonMuaHang" Type="int" />
+    <Property Name="ID_MatHang" Type="int" />
+    <Property Name="ID_KichCo" Type="int" />
+    <Property Name="ID_MauSac" Type="int" />
+    <Property Name="ID_GioiTinh" Type="int" />
+    <Property Name="Gia" Type="money" />
+    <Property Name="GiamGia" Type="int" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="ThanhTien" Type="money" />
+  </EntityType>
+  <EntityType Name="tb_NguoiDung">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenDangNhap" Type="varchar" MaxLength="200" />
+    <Property Name="MatKhau" Type="varchar" MaxLength="100" />
+    <Property Name="TenHienThi" Type="nvarchar" MaxLength="200" />
+    <Property Name="SDT" Type="varchar" MaxLength="12" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="GioiTinh" Type="int" />
+    <Property Name="NgaySinh" Type="date" />
+    <Property Name="DiaChi" Type="ntext" />
+    <Property Name="AnhDaiDien" Type="ntext" />
+    <Property Name="TrangThai" Type="bit" />
+  </EntityType>
+  <EntityType Name="tb_SanPham">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_MatHang" Type="int" />
+    <Property Name="ID_KichCo" Type="int" />
+    <Property Name="ID_MauSac" Type="int" />
+    <Property Name="ID_GioiTinh" Type="int" />
+    <Property Name="TrangThai" Type="bit" />
+  </EntityType>
+  <EntityType Name="tb_SizeMatHang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_MatHang" Type="int" />
+    <Property Name="ID_KichThuoc" Type="int" />
+  </EntityType>
+  <Association Name="FK__tb_AnhMat__ID_Ma__5AEE82B9">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_AnhMatHang" Type="Self.tb_AnhMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_AnhMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ChiTie__ID_Mo__7A672E12">
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="0..1" />
+    <End Role="tb_ChiTietDonMuaHang" Type="Self.tb_ChiTietDonMuaHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ChiTietDonMuaHang">
+        <PropertyRef Name="ID_MoTaDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_ChiTie__ID_Sa__7B5B524B">
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="0..1" />
+    <End Role="tb_ChiTietDonMuaHang" Type="Self.tb_ChiTietDonMuaHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_SanPham">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_ChiTietDonMuaHang">
+        <PropertyRef Name="ID_SanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_DanhGi__ID_Ma__7F2BE32F">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_DanhGiaTraiNghiem" Type="Self.tb_DanhGiaTraiNghiem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_DanhGiaTraiNghiem">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_DanhGi__ID_Ng__7E37BEF6">
+    <End Role="tb_NguoiDung" Type="Self.tb_NguoiDung" Multiplicity="0..1" />
+    <End Role="tb_DanhGiaTraiNghiem" Type="Self.tb_DanhGiaTraiNghiem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_NguoiDung">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_DanhGiaTraiNghiem">
+        <PropertyRef Name="ID_NguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_DonMua__ID_Ng__70DDC3D8">
+    <End Role="tb_NguoiDung" Type="Self.tb_NguoiDung" Multiplicity="0..1" />
+    <End Role="tb_DonMuaHang" Type="Self.tb_DonMuaHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_NguoiDung">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_DonMuaHang">
+        <PropertyRef Name="ID_NguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_GioiTi__ID_Gi__66603565">
+    <End Role="tb_BangGioiTinh" Type="Self.tb_BangGioiTinh" Multiplicity="0..1" />
+    <End Role="tb_GioiTinhMatHang" Type="Self.tb_GioiTinhMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangGioiTinh">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_GioiTinhMatHang">
+        <PropertyRef Name="ID_GioiTinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_GioiTi__ID_Ma__656C112C">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_GioiTinhMatHang" Type="Self.tb_GioiTinhMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_GioiTinhMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MatHan__ID_Da__5629CD9C">
+    <End Role="tb_DanhMuc" Type="Self.tb_DanhMuc" Multiplicity="0..1" />
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_DanhMuc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MatHang">
+        <PropertyRef Name="ID_DanhMuc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MauMat__ID_Ma__619B8048">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_MauMatHang" Type="Self.tb_MauMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MauMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MauMat__ID_Ma__628FA481">
+    <End Role="tb_BangMauSP" Type="Self.tb_BangMauSP" Multiplicity="0..1" />
+    <End Role="tb_MauMatHang" Type="Self.tb_MauMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangMauSP">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MauMatHang">
+        <PropertyRef Name="ID_MauSac" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Do__73BA3083">
+    <End Role="tb_DonMuaHang" Type="Self.tb_DonMuaHang" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_DonMuaHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_DonMuaHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Gi__778AC167">
+    <End Role="tb_BangGioiTinh" Type="Self.tb_BangGioiTinh" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangGioiTinh">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_GioiTinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Ki__75A278F5">
+    <End Role="tb_BangKichThuoc" Type="Self.tb_BangKichThuoc" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangKichThuoc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_KichCo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Ma__74AE54BC">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_MoTaDo__ID_Ma__76969D2E">
+    <End Role="tb_BangMauSP" Type="Self.tb_BangMauSP" Multiplicity="0..1" />
+    <End Role="tb_MoTaDonHang" Type="Self.tb_MoTaDonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangMauSP">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_MoTaDonHang">
+        <PropertyRef Name="ID_MauSac" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Gi__6C190EBB">
+    <End Role="tb_GioiTinhMatHang" Type="Self.tb_GioiTinhMatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_GioiTinhMatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_GioiTinh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Ki__6A30C649">
+    <End Role="tb_SizeMatHang" Type="Self.tb_SizeMatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_SizeMatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_KichCo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Ma__693CA210">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SanPha__ID_Ma__6B24EA82">
+    <End Role="tb_MauMatHang" Type="Self.tb_MauMatHang" Multiplicity="0..1" />
+    <End Role="tb_SanPham" Type="Self.tb_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MauMatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SanPham">
+        <PropertyRef Name="ID_MauSac" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SizeMa__ID_Ki__5EBF139D">
+    <End Role="tb_BangKichThuoc" Type="Self.tb_BangKichThuoc" Multiplicity="0..1" />
+    <End Role="tb_SizeMatHang" Type="Self.tb_SizeMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_BangKichThuoc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SizeMatHang">
+        <PropertyRef Name="ID_KichThuoc" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tb_SizeMa__ID_Ma__5DCAEF64">
+    <End Role="tb_MatHang" Type="Self.tb_MatHang" Multiplicity="0..1" />
+    <End Role="tb_SizeMatHang" Type="Self.tb_SizeMatHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_MatHang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tb_SizeMatHang">
+        <PropertyRef Name="ID_MatHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShoesShop1ModelStoreContainer">
+    <EntitySet Name="tb_Admin" EntityType="Self.tb_Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_AnhMatHang" EntityType="Self.tb_AnhMatHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_BangGiaShip" EntityType="Self.tb_BangGiaShip" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_BangGiaSP" EntityType="Self.tb_BangGiaSP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_BangGioiTinh" EntityType="Self.tb_BangGioiTinh" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_BangKichThuoc" EntityType="Self.tb_BangKichThuoc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_BangMauSP" EntityType="Self.tb_BangMauSP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_Banner" EntityType="Self.tb_Banner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_ChiTietDonMuaHang" EntityType="Self.tb_ChiTietDonMuaHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_DanhGiaTraiNghiem" EntityType="Self.tb_DanhGiaTraiNghiem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_DanhMuc" EntityType="Self.tb_DanhMuc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_DonMuaHang" EntityType="Self.tb_DonMuaHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_GioiTinhMatHang" EntityType="Self.tb_GioiTinhMatHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_MatHang" EntityType="Self.tb_MatHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_MauMatHang" EntityType="Self.tb_MauMatHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_MoTaDonHang" EntityType="Self.tb_MoTaDonHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_NguoiDung" EntityType="Self.tb_NguoiDung" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_SanPham" EntityType="Self.tb_SanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_SizeMatHang" EntityType="Self.tb_SizeMatHang" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__tb_AnhMat__ID_Ma__5AEE82B9" Association="Self.FK__tb_AnhMat__ID_Ma__5AEE82B9">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_AnhMatHang" EntitySet="tb_AnhMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ChiTie__ID_Mo__7A672E12" Association="Self.FK__tb_ChiTie__ID_Mo__7A672E12">
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+      <End Role="tb_ChiTietDonMuaHang" EntitySet="tb_ChiTietDonMuaHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_ChiTie__ID_Sa__7B5B524B" Association="Self.FK__tb_ChiTie__ID_Sa__7B5B524B">
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+      <End Role="tb_ChiTietDonMuaHang" EntitySet="tb_ChiTietDonMuaHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_DanhGi__ID_Ma__7F2BE32F" Association="Self.FK__tb_DanhGi__ID_Ma__7F2BE32F">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_DanhGiaTraiNghiem" EntitySet="tb_DanhGiaTraiNghiem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_DanhGi__ID_Ng__7E37BEF6" Association="Self.FK__tb_DanhGi__ID_Ng__7E37BEF6">
+      <End Role="tb_NguoiDung" EntitySet="tb_NguoiDung" />
+      <End Role="tb_DanhGiaTraiNghiem" EntitySet="tb_DanhGiaTraiNghiem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_DonMua__ID_Ng__70DDC3D8" Association="Self.FK__tb_DonMua__ID_Ng__70DDC3D8">
+      <End Role="tb_NguoiDung" EntitySet="tb_NguoiDung" />
+      <End Role="tb_DonMuaHang" EntitySet="tb_DonMuaHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_GioiTi__ID_Gi__66603565" Association="Self.FK__tb_GioiTi__ID_Gi__66603565">
+      <End Role="tb_BangGioiTinh" EntitySet="tb_BangGioiTinh" />
+      <End Role="tb_GioiTinhMatHang" EntitySet="tb_GioiTinhMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_GioiTi__ID_Ma__656C112C" Association="Self.FK__tb_GioiTi__ID_Ma__656C112C">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_GioiTinhMatHang" EntitySet="tb_GioiTinhMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MatHan__ID_Da__5629CD9C" Association="Self.FK__tb_MatHan__ID_Da__5629CD9C">
+      <End Role="tb_DanhMuc" EntitySet="tb_DanhMuc" />
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MauMat__ID_Ma__619B8048" Association="Self.FK__tb_MauMat__ID_Ma__619B8048">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_MauMatHang" EntitySet="tb_MauMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MauMat__ID_Ma__628FA481" Association="Self.FK__tb_MauMat__ID_Ma__628FA481">
+      <End Role="tb_BangMauSP" EntitySet="tb_BangMauSP" />
+      <End Role="tb_MauMatHang" EntitySet="tb_MauMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Do__73BA3083" Association="Self.FK__tb_MoTaDo__ID_Do__73BA3083">
+      <End Role="tb_DonMuaHang" EntitySet="tb_DonMuaHang" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Gi__778AC167" Association="Self.FK__tb_MoTaDo__ID_Gi__778AC167">
+      <End Role="tb_BangGioiTinh" EntitySet="tb_BangGioiTinh" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Ki__75A278F5" Association="Self.FK__tb_MoTaDo__ID_Ki__75A278F5">
+      <End Role="tb_BangKichThuoc" EntitySet="tb_BangKichThuoc" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Ma__74AE54BC" Association="Self.FK__tb_MoTaDo__ID_Ma__74AE54BC">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_MoTaDo__ID_Ma__76969D2E" Association="Self.FK__tb_MoTaDo__ID_Ma__76969D2E">
+      <End Role="tb_BangMauSP" EntitySet="tb_BangMauSP" />
+      <End Role="tb_MoTaDonHang" EntitySet="tb_MoTaDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Gi__6C190EBB" Association="Self.FK__tb_SanPha__ID_Gi__6C190EBB">
+      <End Role="tb_GioiTinhMatHang" EntitySet="tb_GioiTinhMatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Ki__6A30C649" Association="Self.FK__tb_SanPha__ID_Ki__6A30C649">
+      <End Role="tb_SizeMatHang" EntitySet="tb_SizeMatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Ma__693CA210" Association="Self.FK__tb_SanPha__ID_Ma__693CA210">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SanPha__ID_Ma__6B24EA82" Association="Self.FK__tb_SanPha__ID_Ma__6B24EA82">
+      <End Role="tb_MauMatHang" EntitySet="tb_MauMatHang" />
+      <End Role="tb_SanPham" EntitySet="tb_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SizeMa__ID_Ki__5EBF139D" Association="Self.FK__tb_SizeMa__ID_Ki__5EBF139D">
+      <End Role="tb_BangKichThuoc" EntitySet="tb_BangKichThuoc" />
+      <End Role="tb_SizeMatHang" EntitySet="tb_SizeMatHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tb_SizeMa__ID_Ma__5DCAEF64" Association="Self.FK__tb_SizeMa__ID_Ma__5DCAEF64">
+      <End Role="tb_MatHang" EntitySet="tb_MatHang" />
+      <End Role="tb_SizeMatHang" EntitySet="tb_SizeMatHang" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

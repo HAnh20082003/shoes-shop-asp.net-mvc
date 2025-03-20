@@ -1,0 +1,90 @@
+﻿@using CuaHangBanGiay.Models;
+<div class="container-fluid py-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm vừa xem</span></h2>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel lastwatch-carousel">
+
+                @{
+                    List<tb_MatHang> matHangVuaXem = (List<tb_MatHang>)Session["SPVuaXem"];
+                    for (int i = matHangVuaXem.Count() - 1; i >= 0; i--)
+                    {
+                        <div class="product-item bg-light">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="~/@Init.folderImageProduct@matHangVuaXem.ElementAt(i).TenMatHang/@matHangVuaXem.ElementAt(i).AnhMoTa" alt="">
+                                <div class="product-action">
+                                    @{
+                                        List<int?> dsYeuThich = null;
+                                        if (Session["YeuThich"] != null)
+                                        {
+                                            dsYeuThich = (List<int?>)Session["YeuThich"];
+                                        }
+                                        if (Session["YeuThich"] == null || dsYeuThich.FirstOrDefault(n => n == matHangVuaXem.ElementAt(i).ID) == null)
+                                        {
+                                            <a class="btn btn-outline-dark btn-square" id="id_yeuthich_vuaxem-@matHangVuaXem.ElementAt(i).ID" onclick="ThemVaoYeuThichSPVuaXem(@matHangVuaXem.ElementAt(i).ID)"><i class="far fa-heart"></i></a>
+                                        }
+                                    }
+                                    <a class="btn btn-outline-dark btn-square" href="@Url.Action("XemSanPham", "NguoiDung", new { @page = 1, @id_matHang = matHangVuaXem.ElementAt(i).ID })"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">@matHangVuaXem.ElementAt(i).TenMatHang</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    @{
+                                        if (matHangVuaXem.ElementAt(i).GiamGia != 0)
+                                        {
+                                            <h5>
+                                                @Init.getGiamGiaSanPham(matHangVuaXem.ElementAt(i).Gia, matHangVuaXem.ElementAt(i).GiamGia).000 VNĐ
+                                            </h5><h6 class="text-muted ml-2"><del>@ConvertMoney.convertMoney(matHangVuaXem.ElementAt(i).Gia).000 VNĐ</del></h6>
+                                        }
+                                        else
+                                        {
+                                            <h5>@ConvertMoney.convertMoney(matHangVuaXem.ElementAt(i).Gia).000 VNĐ</h5>
+                                        }
+                                    }
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    @{
+                                        int count = (int)matHangVuaXem.ElementAt(i).Rating;
+                                        for (int j = 0; j < count; j++)
+                                        {
+
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                        }
+                                        if (count != matHangVuaXem.ElementAt(i).Rating)
+                                        {
+                                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                                            count++;
+                                        }
+                                        for (int j = count; j < 5; j++)
+                                        {
+                                            <small class="far fa-star text-primary mr-1"></small>
+                                        }
+                                        <small>
+                                            (@Init.getSoLuotDanhGiaSanPham(matHangVuaXem.ElementAt(i).ID) Lượt đánh giá)
+                                        </small>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ThemVaoYeuThichSPVuaXem(id_matHang) {
+        var yeuthich = document.getElementById(`id_yeuthich_vuaxem-${id_matHang}`);
+            yeuthich.remove();
+            const url = new URL('@Url.Action("ThemYeuThich", "NguoiDung")', location.origin);
+            url.searchParams.set('id_matHang', id_matHang);
+                $('#giohangVaYeuThich').load(url.href);
+                toastMixin.fire({
+                    animation: true,
+                    title: `Đã thêm 1 sản phẩm vào mục yêu thích`,
+                    icon: 'success'
+                });
+        }
+</script>

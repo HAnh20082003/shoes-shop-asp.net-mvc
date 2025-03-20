@@ -1,0 +1,120 @@
+﻿@model CuaHangBanGiay.Models.tb_MatHang
+@using CuaHangBanGiay.Models;
+
+<script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+
+
+@*<script> 
+    CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+    CKEDITOR.config.entities_latin = false;
+</script>*@
+
+<div class="modal fade" id="modalSuaMatHang-@Model.ID">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("SuaMatHang", "MatHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title">Sửa mặt hàng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Ảnh hiện tại</label>
+                                    <div class="form-group align-middle">
+                                        <img src="~/@Init.folderImageProduct@Model.TenMatHang/@Model.AnhMoTa" style="display:block;margin:auto;width:200px;height:200px;" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+
+
+                                <div class="form-group">
+                                    <label>Chọn ảnh mặt hàng</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input form-control" id="inputGroupFile04" name="AnhMH" aria-describedby="inputGroupFileAddon04">
+                                        <label class="custom-file-label" for="inputGroupFile04">Chọn ảnh</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>Danh mục</label>
+                                @Html.DropDownList("DanhMuc", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Tên mặt hàng</label>
+                                    <input class="form-control" type="text" value="@Model.TenMatHang" name="TenMH" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Giá (?.000 VNĐ)</label>
+                                    <input class="form-control" type="text" value="@((int)Model.Gia)" name="GiaMH" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Giảm Giá</label>
+                                    <input class="form-control" type="number" value="@Model.GiamGia" min="0" max="100" name="GiamGia" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Mô tả sản phẩm</label>
+                                    <div class="col-lg-12">
+                                        <textarea name="SuaMoTa" id="SuaMoTa-@Model.ID" required class="form-control">@Model.MoTa</textarea>
+                                        <script>
+                                            document.getElementById('SuaMatHang-@Model.ID').onclick = function () {
+                                                    CKEDITOR.replace("SuaMoTa-@Model.ID");
+                                                    //CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+                                                    //CKEDITOR.config.entities_latin = false;
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<script>
+    bsCustomFileInput.init();
+
+</script>
+
+

@@ -1,0 +1,18 @@
+﻿@using CuaHangBanGiay.Models;
+@model IEnumerable<tb_MatHang>
+
+@{
+    ViewBag.Title = "YeuThich";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        @Html.Action("DanhSachYeuThichPartial", "NguoiDung");
+    </div>
+</div>
+
+
+
+
+

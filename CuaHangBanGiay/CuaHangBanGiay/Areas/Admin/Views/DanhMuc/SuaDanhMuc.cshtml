@@ -1,0 +1,73 @@
+﻿@model CuaHangBanGiay.Models.tb_DanhMuc
+@using CuaHangBanGiay.Models;
+
+<div class="modal fade" id="modalSuaDanhMuc-@Model.ID">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("SuaDanhMuc", "DanhMuc", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title">Sửa danh mục</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ID)
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Ảnh hiện tại</label>
+                                    <div class="form-group align-middle">
+                                        <img src="~/@Init.folderImageCategory@Model.AnhMoTa" style="display:block;margin:auto;width:200px;height:200px;" />
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Tên danh mục</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="TenDM" id="TenDM" value="@Model.TenDanhMuc" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Chọn ảnh danh mục</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input form-control" id="inputGroupFile04" name="Anh" aria-describedby="inputGroupFileAddon04">
+                                        <label class="custom-file-label" for="inputGroupFile04">Chọn ảnh</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<script>
+    bsCustomFileInput.init();
+
+</script>

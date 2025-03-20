@@ -1,0 +1,207 @@
+﻿
+
+@model CuaHangBanGiay.Models.tb_NguoiDung
+@using CuaHangBanGiay.Models;
+
+@{
+    ViewBag.Title = "ChiTietKH";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-4 d-flex">
+                <div class="card col-12">
+                    <div class="card-body">
+                        @{
+                            if (Model.AnhDaiDien != null)
+                            {
+                                <img src="~/@Init.folderAvatarUser@Model.AnhDaiDien" style="display: block; margin: auto; width: 200px; height: 200px" />
+                            }
+                            else
+                            {
+                                <img src="~/@(Init.folderAvatarUser)user.png" style="display: block; margin: auto; width: 200px; height: 200px" />
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8 d-flex">
+                <div class="card col-12">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">Họ tên:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="form-control ">@Model.TenHienThi</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">Tên đăng nhập:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="form-control">@Model.TenDangNhap</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">Giới tính:</label>
+                            </div>
+                            <div class="col-md-6">
+                                @{if (Model.GioiTinh == 1)
+                                    {
+                                        <h4 class="form-control">Nam</h4>
+                                    }
+                                    else if (Model.GioiTinh == 0)
+                                    {
+                                        <h4 class="form-control">Nữ</h4>
+                                    }
+
+                                }
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">Ngày sinh:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="form-control">@(DateTime.Parse(Model.NgaySinh.ToString()).ToString("dd-MM-yyyy"))</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">SĐT:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="form-control">@Model.SDT</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">Email:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="form-control">@Model.Email</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">Địa chỉ:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="form-control">@Model.DiaChi</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-control border-0">Trạng thái:</label>
+                            </div>
+                            <div class="col-md-6">
+                                @{if (Model.TrangThai == true)
+                                    {
+                                        <h4 class="form-control btn-success text-bold text-center col-5">Đang hoạt động</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="form-control btn-danger text-bold text-center col-5">Ngừng hoạt động</h4>
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Danh sách đơn hàng</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Người đặt hàng</th>
+                                    <th>SDT</th>
+                                    <th>Địa chỉ giao hàng</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Trạng thái</th>
+                                    <th>Tổng cộng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model.tb_DonMuaHang)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item.ID</td>
+                                            <td>@item.HoTen</td>
+                                            <td>@item.SDT</td>
+                                            <td>@item.DiaChiGiaoHang</td>
+                                            <td>@item.NgayDat</td>
+                                            <td>
+                                                @{
+                                                    if (item.TrangThai == 0)
+                                                    {
+                                                        <label class="btn btn-secondary">Chờ duyệt</label>
+                                                    }
+                                                    else if (item.TrangThai == 1)
+                                                    {
+                                                        <label class="btn btn-warning">Đã duyệt</label>
+                                                    }
+                                                    else if (item.TrangThai == 2)
+                                                    {
+                                                        <label class="btn btn-success">Đã nhận</label>
+                                                    }
+                                                    else if (item.TrangThai == -1)
+                                                    {
+                                                        <label class="btn btn-danger">Hủy đơn</label>
+                                                    }
+                                                    else if (item.TrangThai == 3)
+                                                    {
+                                                        <label class="btn btn-secondary">Chờ lấy hàng</label>
+                                                    }
+                                                    else if (item.TrangThai == 4)
+                                                    {
+                                                        <label class="btn btn-secondary">Đang giao</label>
+                                                    }
+                                                }
+                                            </td>
+                                            <td>@item.TongCong</td>
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalCTDH-@item.ID">Chi tiết</button>
+                                                @Html.Action("ChiTietDonHang", "DonHang", new { @id = item.ID })
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+
+

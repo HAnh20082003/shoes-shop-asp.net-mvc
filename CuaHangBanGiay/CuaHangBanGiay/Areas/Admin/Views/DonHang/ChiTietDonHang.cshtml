@@ -1,0 +1,173 @@
+﻿@model CuaHangBanGiay.Models.tb_DonMuaHang
+@using CuaHangBanGiay.Models;
+<div class="modal fade" id="modalCTDH-@Model.ID">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Chi tiết đơn hàng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Họ tên khách hàng: </label>
+                                <input type="text" class="form-control col-7" value="@Model.HoTen" disabled />
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">SĐT: </label>
+                                <input type="text" class="form-control col-7" value="@Model.SDT" disabled />
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Địa chỉ giao hàng: </label>
+                                <textarea class="form-control col-7" disabled rows="3">@Model.DiaChiGiaoHang</textarea>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Địa chỉ nhà riêng: </label>
+                                @{
+                                    if (Model.NhaRieng == true)
+                                    {
+                                        <input type="checkbox" class="form-control col-1" value="@Model.NhaRieng" checked disabled />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="form-control col-6" value="@Model.NhaRieng" disabled />
+                                    }
+                                }
+
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Ngày đặt: </label>
+                                <input type="text" class="form-control btn-outline-warning col-6" value="@Model.NgayDat" disabled />
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Trạng thái: </label>
+                                @{
+                                    if (Model.TrangThai == 0)
+                                    {
+                                        <label class="col-3 btn btn-secondary">Chờ duyệt</label>
+                                    }
+                                    else if (Model.TrangThai == 1)
+                                    {
+                                        <label class="col-3 btn btn-warning">Đã duyệt</label>
+                                    }
+                                    else if (Model.TrangThai == 2)
+                                    {
+                                        <label class="col-3 btn btn-success">Đã nhận</label>
+                                    }
+                                    else if (Model.TrangThai == -1)
+                                    {
+                                        <label class="col-3 btn btn-danger">Hủy đơn</label>
+                                    }
+                                    else if (Model.TrangThai == 3)
+                                    {
+                                        <label class="col-3 btn btn-secondary">Chờ lấy hàng</label>
+                                    }
+                                    else if (Model.TrangThai == 4)
+                                    {
+                                        <label class="col-3 btn btn-secondary">Đang giao</label>
+                                    }
+
+
+                                }
+                            </div>
+                            @if (Model.NgayDuyet != null)
+                            {
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4">Ngày duyệt: </label>
+                                    <input type="text" class="form-control btn-outline-success col-6" value="@Model.NgayDuyet" disabled />
+                                </div>
+                            }
+                            @if (Model.NgayDuKien != null)
+                            {
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4">Ngày dự kiến: </label>
+                                    <input type="text" class="form-control btn-outline-primary col-6" value="@Model.NgayDuKien" disabled />
+                                </div>
+                            }
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Tổng tiền: </label>
+                                <input type="text" class="form-control btn-outline-secondary col-6" value="@Model.TongTien" disabled />
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Phí ship: </label>
+                                <input type="text" class="form-control btn-outline-danger col-6" value="@Model.TienShip" disabled />
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Tổng tiền: </label>
+                                <input type="text" class="form-control btn-outline-success col-6" value="@Model.TongCong" disabled />
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-4">Hình thức thanh toán: </label>
+                                <label class="col-6 btn btn-success">@Model.HinhThucTT</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Ảnh mô tả</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Kích thước</th>
+                                        <th>Màu sắc</th>
+                                        <th>Loại giày</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Giảm giá</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int i = 1;
+                                        foreach (var item in Model.tb_MoTaDonHang)
+                                        {
+                                            <tr>
+                                                <td class="align-middle">@i</td>
+                                                <td><img style="width:100px;height:100px" src="~/@Init.folderImageProduct@item.tb_MatHang.TenMatHang/@item.tb_MatHang.AnhMoTa" /></td>
+                                                <td class="align-middle">@item.tb_MatHang.TenMatHang</td>
+                                                <td class="align-middle">@item.tb_BangKichThuoc.KichThuoc</td>
+                                                <td class="align-middle">@item.tb_BangMauSP.MauSac</td>
+                                                <td class="align-middle">@item.tb_BangGioiTinh.GioiTinh</td>
+                                                <td class="align-middle">@item.Gia</td>
+                                                <td class="align-middle">@item.tb_ChiTietDonMuaHang.Count()</td>
+                                                <td class="align-middle">@item.GiamGia</td>
+                                                <td class="align-middle">@item.ThanhTien</td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    
+                </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<script>
+    bsCustomFileInput.init();
+
+</script>

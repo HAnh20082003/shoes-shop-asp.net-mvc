@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row px-xl-5" id="dsgh">
+        @Html.Action("DanhSachGioHangPartial", "NguoiDung")
+    </div>
+</div>
+
+@{
+    if (Session["TaiKhoan"] != null)
+    {
+        <div class="container-fluid">
+            <div class="row px-xl-5" id="dsdh">
+                @Html.Action("DanhSachDonHangPartial", "NguoiDung")
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container-fluid">
+            <div class="row px-xl-5" id="dsdh">
+                @Html.Action("DanhSachDonHangAnDanhPartial", "NguoiDung")
+            </div>
+        </div>
+    }
+}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-left',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+</script>
+
+
+@{
+    if (Session["SuccessThanhToan"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuccessThanhToan"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["SuccessThanhToan"] = null;
+    }
+    if (Session["SucessHuyDonHang"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SucessHuyDonHang"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["SucessHuyDonHang"] = null;
+    }
+}
+

@@ -1,0 +1,56 @@
+﻿@using CuaHangBanGiay.Models;
+@using PagedList.Mvc;
+@model PagedList.PagedList<tb_DanhGiaTraiNghiem>
+<link href="~/Content/PagedList.css" rel="stylesheet">
+<div id="dsdg">
+    <h4 class="mb-4">@ViewBag.TongSoDG bài đánh giá cho sản phẩm "@ViewBag.TenMatHang"</h4>
+    @{
+        if (Session["HienThiTrang"] != null)
+        {
+            foreach (var item in Model)
+            {
+                <div class="media mb-4">
+                    <img src="~/@Init.folderAvatarUser@item.tb_NguoiDung.AnhDaiDien" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                    <div class="media-body">
+                        <h6>@item.tb_NguoiDung.TenHienThi<small> - <i>@item.NgayDanhGia.ToString()</i></small></h6>
+
+
+                        <div class="text-primary mb-2">
+                            @{
+                                int count = (int)item.Rating;
+                                for (int i = 0; i < count; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                if (count != item.Rating)
+                                {
+                                    <i class="fas fa-star-half-alt"></i>
+                                    count++;
+                                }
+                                for (int i = count; i < 5; i++)
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            }
+                        </div>
+                        <p>@item.NoiDung</p>
+                    </div>
+                </div>
+            }
+            <div style="color: black; margin-left: auto; display: flex; justify-content: center; margin-right: auto">
+                @*Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) /@Model.PageCount*@
+
+                @Html.PagedListPager(Model, page => Url.Action("XemSanPham", new { @page = page, @id_matHang = ViewBag.ID_MatHang }))
+            </div>
+
+        }
+        else
+        {
+            <div class="align-middle" style="margin-left: 20px">
+                Chưa có bài đánh giá nào
+            </div>
+        }
+    }
+</div>
+
+

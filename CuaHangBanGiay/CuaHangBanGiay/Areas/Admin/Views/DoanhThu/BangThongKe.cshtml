@@ -1,0 +1,108 @@
+﻿@using CuaHangBanGiay.Models
+
+<div class="col-4 d-flex">
+    <div class="card col-12">
+        <div class="card-body">
+            <div>
+                <canvas id="SPBC"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-8">
+    <div class="card">
+        <div class="card-body">
+            <div>
+                <canvas id="DoanhThu"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+    var doanhthu = document.getElementById('DoanhThu');
+    var spbc = document.getElementById('SPBC');
+     new Chart(doanhthu, {
+        type: 'line',
+        data: {
+            labels: [
+                 @foreach(var item in ViewBag.dt as List<doanhthuNgay>)
+            {
+                <text>
+                '@item.Ngay',
+
+                </text>
+            }
+                /*'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'*/
+            ],
+            datasets: [{
+                label: 'Doanh thu theo ngày',
+                data: [
+                      @foreach(var item in ViewBag.dt as List<doanhthuNgay>)
+            {
+                <text>
+                @item.TongTien,
+
+                </text>
+            }
+                    /*12, 19, 3, 5, 2, 3*/
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+
+
+
+    });
+
+    new Chart(spbc, {
+        type: 'bar',
+        data: {
+            labels: [
+                @foreach(var item in ViewBag.topdt as List<doanhthuNgay>)
+            {
+                <text>
+                '@item.Ngay',
+
+                </text>
+            }
+            ],
+            datasets: [{
+                label: 'Top 10 ngày',
+                data: [
+                     @foreach(var item in ViewBag.topdt as List<doanhthuNgay>)
+            {
+                <text>
+                @item.TongTien,
+
+                </text>
+            }
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+        }
+    });
+
+
+
+</script>
+
+
+

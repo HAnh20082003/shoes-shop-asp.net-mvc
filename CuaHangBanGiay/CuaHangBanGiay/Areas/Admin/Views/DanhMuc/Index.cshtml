@@ -1,0 +1,281 @@
+﻿@model IEnumerable<CuaHangBanGiay.Models.tb_DanhMuc>
+@using CuaHangBanGiay.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+@Html.Action("ThemDanhMuc", "DanhMuc")
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn-lg btn btn-primary me-md-2" data-toggle="modal" data-target="#modalThemDanhMuc">
+                                Thêm danh mục
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="danhmuc">
+                            <thead>
+                                <tr style="font-size:20px">
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AnhMoTa)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.TenDanhMuc)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.SoLuongMatHang)
+                                    </th>
+
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr style="font-size:20px">
+                                        <td class="col-1">
+                                            <img src="~/@Init.folderImageCategory@item.AnhMoTa" style="width:100px;height:100px;" />
+
+                                        </td>
+                                        <td class="align-middle">
+                                            @Html.DisplayFor(modelItem => item.TenDanhMuc)
+                                        </td>
+                                        <td class="col-3 align-middle">
+                                            @item.tb_MatHang.Count()
+                                        </td>
+
+                                        <td class="col-2 align-middle">
+
+                                            <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#modalSuaDanhMuc-@item.ID">
+                                                Sửa
+                                            </button>
+                                            <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#modalXoaDanhMuc-@item.ID">
+                                                Xóa
+                                            </button>
+                                            @Html.Action("SuaDanhMuc", "DanhMuc", new { @id = item.ID })
+                                            @Html.Action("XoaDanhMuc", "DanhMuc", new { @id = item.ID })
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+
+
+<script>
+    var table1 = new DataTable('#danhmuc', {
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json',
+        },
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+@{
+    if (Session["ThemDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["ThemDanhMuc"]',
+
+                });
+             }
+        </script>
+        Session["ThemDanhMuc"] = null;
+    }
+    else if (Session["LoiThemDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiThemDanhMuc"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiThemDanhMuc"] = null;
+    }
+}
+
+
+
+@{
+    if (Session["XoaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["XoaDanhMuc"]',
+
+                });
+             }
+        </script>
+        Session["XoaDanhMuc"] = null;
+    }
+    else if (Session["LoiXoaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiXoaDanhMuc"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiXoaDanhMuc"] = null;
+    }
+}
+
+
+
+@{
+    if (Session["SuaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuaDanhMuc"]',
+
+                });
+             }
+        </script>
+        Session["SuaDanhMuc"] = null;
+    }
+    else if (Session["LoiSuaDanhMuc"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiSuaDanhMuc"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiSuaDanhMuc"] = null;
+    }
+}

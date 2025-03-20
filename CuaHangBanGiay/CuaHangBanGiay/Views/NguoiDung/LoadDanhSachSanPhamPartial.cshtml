@@ -1,0 +1,134 @@
+﻿@using PagedList.Mvc;
+@using CuaHangBanGiay.Models;
+@model PagedList.PagedList<tb_MatHang>
+
+@{ 
+    List<int?> dsYeuThich = null;
+    if (Session["YeuThich"] != null)
+    {
+        dsYeuThich = (List<int?>)Session["YeuThich"];
+    }
+}
+
+<div class="row pb-3">
+    <div class="col-12 pb-1">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <!--
+                <div>
+                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
+                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
+            </div>
+            -->
+            <div class="ml-2">
+                <div class="btn-group">
+                    @{
+                        if (ViewBag.SapXep == 1)
+                        {
+
+                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Mới nhất</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Đánh giá</button>
+                        }
+                    }
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="@Url.Action("CuaHang", "NguoiDung", new { @id_danhMuc = ViewBag.ID_DanhMuc, @keyword = Session["keyword"] })">Mới nhất</a>
+                        <a class="dropdown-item" href="@Url.Action("CuaHang", "NguoiDung", new { @id_danhMuc = ViewBag.ID_DanhMuc, @keyword = Session["keyword"], @sort = 2 })">Đánh giá</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+            <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="~/@Init.folderImageProduct@item.TenMatHang/@item.AnhMoTa" alt="">
+                    <div class="product-action">
+                        @*@{
+
+            var slcl = item.tb_SanPham.Where(n => n.TrangThai == false).Count();
+            if (slcl != 0)
+            {
+                <a class="btn btn-outline-dark btn-square" onclick="ThemVaoGio(@item.ID)"><i class="fa fa-shopping-cart"></i></a>
+            }
+        }*@
+                        @{
+                            if (Session["YeuThich"] == null || dsYeuThich.FirstOrDefault(n => n == item.ID) == null)
+                            {
+                                <a class="btn btn-outline-dark btn-square" id="id_yeuthich-@item.ID" onclick="ThemVaoYeuThich(@item.ID)"><i class="far fa-heart"></i></a>
+                            }
+                        }
+                        <a class="btn btn-outline-dark btn-square" href="@Url.Action("XemSanPham", "NguoiDung", new { @page = 1, @id_matHang = @item.ID })"><i class="fa fa-search"></i></a>
+                    </div>
+                </div>
+                <div class="text-center py-4">
+                    <a class="h6 text-decoration-none text-truncate" href="">@item.TenMatHang</a>
+                    <div class="d-flex align-items-center justify-content-center mt-2">
+                        @{
+                            if (item.GiamGia != 0)
+                            {
+                                <h5>
+                                    @Init.getGiamGiaSanPham(item.Gia, item.GiamGia).000 VNĐ
+                                </h5><h6 class="text-muted ml-2"><del>@ConvertMoney.convertMoney(@item.Gia).000 VNĐ</del></h6>
+                            }
+                            else
+                            {
+                                <h5>@ConvertMoney.convertMoney(@item.Gia).000 VNĐ</h5>
+                            }
+                        }
+
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-1">
+                        @{
+                            int count = (int)item.Rating;
+                            for (int i = 0; i < count; i++)
+                            {
+
+                                <small class="fa fa-star text-primary mr-1"></small>
+                            }
+                            if (count != item.Rating)
+                            {
+                                <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                                count++;
+                            }
+                            for (int i = count; i < 5; i++)
+                            {
+                                <small class="far fa-star text-primary mr-1"></small>
+                            }
+                            <small>
+                                (@Init.getSoLuotDanhGiaSanPham(@item.ID) Lượt đánh giá)
+                            </small>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+   
+
+</div>
+
+
+<div style="color:black; margin-left: auto; display:flex; justify-content:center; margin-right: auto">
+    @*Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) /@Model.PageCount*@
+    @Html.PagedListPager(Model, page => Url.Action("CuaHang", new { @page = page, @id_danhMuc = ViewBag.ID_DanhMuc, @sort = ViewBag.SapXep, @keyword = Session["keyword"] }))
+</div>
+
+<script>
+        function ThemVaoYeuThich(id_matHang) {
+            var yeuthich = document.getElementById(`id_yeuthich-${id_matHang}`);
+            yeuthich.remove();
+            const url = new URL('@Url.Action("ThemYeuThich", "NguoiDung")', location.origin);
+            url.searchParams.set('id_matHang', id_matHang);
+                $('#giohangVaYeuThich').load(url.href);
+                toastMixin.fire({
+                    animation: true,
+                    title: `Đã thêm 1 sản phẩm vào mục yêu thích`,
+                    icon: 'success'
+                });
+        }
+</script>

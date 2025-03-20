@@ -1,0 +1,52 @@
+﻿@model CuaHangBanGiay.Models.tb_DanhMuc
+
+<div class="modal fade" id="modalXoaDanhMuc-@Model.ID">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div>Bạn có muốn xóa danh mục <b style="color:red">@Model.TenDanhMuc</b></div>
+                        @*<div class="form-group">
+                            <label>Tên danh mục</label>
+                            <div class="col-md-12">
+                                <input type="text" name="TenDM" id="TenDM" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Chọn ảnh danh mục</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputGroupFile04" name="Anh" aria-describedby="inputGroupFileAddon04">
+                                <label class="custom-file-label" for="inputGroupFile04">Chọn ảnh</label>
+                            </div>
+
+                        </div>*@
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    @*<button type="submit" class="btn btn-primary">Thêm</button>*@
+                    @Html.ActionLink("Xóa","CFXoaDanhMuc","DanhMuc",new { @id = Model.ID }, new { @class = "btn btn-danger" })
+                </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+

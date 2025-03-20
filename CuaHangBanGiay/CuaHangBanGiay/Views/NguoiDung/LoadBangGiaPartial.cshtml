@@ -1,0 +1,30 @@
+﻿@using CuaHangBanGiay.Models;
+@model IEnumerable<tb_BangGiaSP>
+
+<div class="bg-light p-4 mb-30">
+    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+        <input type="radio" class="custom-control-input" checked id="price-all" name="price">
+        <input hidden id="sl-price" value="@Model.Count()">
+        <label class="custom-control-label" for="price-all">Tất cả</label>
+        <span class="badge border font-weight-normal">
+            
+            @Init.getSoLuongMatHang(ViewBag.ID_DanhMuc, ViewBag.KeyWord)
+        </span>
+    </div>
+
+    @{
+
+        for (int i = 0; i < Model.Count(); i++)
+        {
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                <input hidden id="id_price-@i" value="@Model.ElementAt(i).ID">
+                <input type="radio" class="custom-control-input" id="price-@i" name="price">
+                <label class="custom-control-label" for="price-@i">@ConvertMoney.convertMoney(Model.ElementAt(i).MinGia).000 VNĐ - @ConvertMoney.convertMoney(Model.ElementAt(i).MaxGia).000 VNĐ</label>
+                <span class="badge border font-weight-normal">
+                    @Init.getSoLuongMucGia(Model.ElementAt(i).MinGia, Model.ElementAt(i).MaxGia, ViewBag.ID_DanhMuc, ViewBag.KeyWord)
+                </span>
+            </div>
+        }
+    }
+</div>
+

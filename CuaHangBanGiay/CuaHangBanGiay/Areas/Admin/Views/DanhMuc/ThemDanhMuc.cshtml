@@ -1,0 +1,57 @@
+﻿<div class="modal fade" id="modalThemDanhMuc">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("ThemDanhMuc", "DanhMuc", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm danh mục sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <label>Tên danh mục</label>
+                            <div class="col-md-12">
+                                <input type="text" name="TenDM" id="TenDM" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Chọn ảnh danh mục</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input form-control" id="inputGroupFile" name="Anh" aria-describedby="inputGroupFileAddon">
+                                <label class="custom-file-label" for="inputGroupFile">Chọn ảnh</label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<script>
+    bsCustomFileInput.init();
+
+</script>

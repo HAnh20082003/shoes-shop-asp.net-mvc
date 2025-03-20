@@ -1,0 +1,497 @@
+﻿
+@model IEnumerable<CuaHangBanGiay.Models.tb_NguoiDung>
+@using CuaHangBanGiay.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!--Thêm KH-->
+<script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+
+<div class="modal fade" id="modalThemKH">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("ThemKH", "KhachHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm khách hàng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Họ tên</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="HoTen" id="HoTen" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>Tên đăng nhập</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="TenDN" id="TenDN" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>Mật khẩu</label>
+                                <div class="col-md-12">
+                                    <input type="password" name="MatKhau" id="MatKhau" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>Ngày Sinh</label>
+                                <div class="col-md-12">
+                                    <input type="date" name="NgaySinh" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>Giới tính</label>
+                                <div class="col-md-12">
+                                    <input type="radio" name="GioiTinh" value="1" checked required> Nam
+
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="radio" name="GioiTinh" value="0" checked required> Nữ
+
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>SDT</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="SDT" id="SDT" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>Email</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="Email" id="Email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Địa chỉ</label>
+                                    <div class="col-lg-12">
+                                        <textarea name="DiaChi" id="DiaChi" required class="form-control"></textarea>
+                                        <script>
+                                            CKEDITOR.replace('DiaChi');
+                                            CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+                                            CKEDITOR.config.entities_latin = false;
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Ảnh đại diện</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input form-control" id="inputGroupFile" name="Anh" aria-describedby="inputGroupFileAddon">
+                                        <label class="custom-file-label" for="inputGroupFile">Chọn ảnh</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6"></div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<script>
+    bsCustomFileInput.init();
+
+</script>
+
+<!--End ThemKH-->
+
+<div class="modal fade" id="modalKHBanned">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Danh sách khách hàng bị dừng hoạt động</h3>
+            </div>
+            @using (Html.BeginForm("CapNhatGoBan", "KhachHang", FormMethod.Post))
+            {
+            <div class="modal-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>@Html.DisplayNameFor(model => model.AnhDaiDien)</th>
+                            <th>@Html.DisplayNameFor(model => model.TenHienThi)</th>
+                            <th>@Html.DisplayNameFor(model => model.TenDangNhap)</th>
+                            <th>@Html.DisplayNameFor(model => model.GioiTinh)</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int j = 1;
+                            foreach (var item in Model)
+                            {
+                                if (item.TrangThai == false)
+                                {
+                                    <tr id="tr-kh-@item.ID">
+                                        <td class="align-middle text-center">
+                                            @j
+                                            <input hidden name="id-goban-@item.ID" value="abc" />
+                                        </td>
+                                        <td class="align-middle">
+                                            @{
+                                                if (item.AnhDaiDien == null)
+                                                {
+                                                    <img src="~/@(Init.folderAvatarUser)user.png" class="d-flex" style="width:80px;height:80px" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/@Init.folderAvatarUser@item.AnhDaiDien" class="d-flex" style="width:80px;height:80px" />
+                                                }
+                                            }
+                                        </td>
+                                        <td class="align-middle">@Html.DisplayFor(model => item.TenHienThi)</td>
+                                        <td class="align-middle">@Html.DisplayFor(model => item.TenDangNhap)</td>
+                                        <td class="align-middle">@(item.GioiTinh==1?"Nam":"Nữ")</td>
+                                        <td class="align-middle">
+                                            <button type="button" class="btn btn-success" id="@item.ID" onclick="UnBanned(this)">Cho phép HĐ</button>
+                                        </td>
+                                    </tr>
+                                    j++;
+                                }
+
+
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer align-self-center">
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+            }
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-10">
+                                <h3>Quản lý khách hàng</h3>
+                            </div>
+                            <div class="d-grid gap-3 d-md-flex justify-content-between" style="display: flex; margin-right: 10px; width: 100%">
+                                <button type="button" class="btn-sm btn btn-primary me-md-2" style="margin-right: 10px" data-toggle="modal" data-target="#modalThemKH">
+                                    Thêm khách hàng
+                                </button>
+                                <button type="button" class="btn-sm btn btn-primary me-md-2" data-toggle="modal" data-target="#modalKHBanned">
+                                    Danh sách ngừng HĐ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="khachhang">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>@Html.DisplayNameFor(model => model.AnhDaiDien)</th>
+                                    <th>@Html.DisplayNameFor(model => model.TenHienThi)</th>
+                                    <th>@Html.DisplayNameFor(model => model.TenDangNhap)</th>
+                                    <th>@Html.DisplayNameFor(model => model.GioiTinh)</th>
+                                    <th>@Html.DisplayNameFor(model => model.DiaChi)</th>
+                                    <th>@Html.DisplayNameFor(model => model.SDT)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                                    <th class="align-self-center col-5">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        if (item.TrangThai == true)
+                                        {
+                                            <tr>
+                                                <td class="align-middle text-center">@i</td>
+                                                <td class="align-middle">
+                                                    @{
+                                                        if (item.AnhDaiDien == null)
+                                                        {
+                                                            <img src="~/@(Init.folderAvatarUser)user.png" class="d-flex" style="width:80px;height:80px" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/@Init.folderAvatarUser@item.AnhDaiDien" class="d-flex" style="width:80px;height:80px" />
+                                                        }
+                                                    }
+                                                </td>
+                                                <td class="align-middle">@Html.DisplayFor(model => item.TenHienThi)</td>
+                                                <td class="align-middle">@Html.DisplayFor(model => item.TenDangNhap)</td>
+                                                <td class="align-middle">@(item.GioiTinh==1?"Nam":"Nữ")</td>
+                                                <td class="align-middle col-3">@Html.DisplayFor(model => item.DiaChi)</td>
+                                                <td class="align-middle">@Html.DisplayFor(model => item.SDT)</td>
+                                                <td class="align-middle">@Html.DisplayFor(model => item.Email)</td>
+                                                <td class="align-middle">
+                                                    <button type="button" id="SuaThongTin-@item.ID" class="btn btn-success" data-toggle="modal" data-target="#modalSuaThongTin-@item.ID">Cập nhật</button>
+                                                    <a href="@Url.Action("ChiTietKH","KhachHang",new {@id = item.ID })" class="btn btn-secondary">Chi tiết</a>
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalXoaKH-@item.ID">Ngừng HĐ</button>
+
+                                                    @Html.Action("SuaThongTin", "KhachHang", new { @id = item.ID })
+                                                    @Html.Action("XoaKH", "KhachHang", new { @id = item.ID })
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
+
+
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    var table1 = new DataTable('#khachhang', {
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json',
+        },
+    });
+    function UnBanned(button) {
+        var id = button.id;
+        var tr = document.getElementById(`tr-kh-${id}`);
+        tr.remove();
+    }
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+@{
+    if (Session["SuccessGoBan"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                    toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) =>
+                {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+                    window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuccessGoBan"]',
+
+                });
+            }
+        </script>
+        Session["SuccessGoBan"] = null;
+    }
+    if (Session["ThemKH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+            toastMixin.fire({
+            animation: true,
+                title: '@Session["ThemKH"]',
+
+                });
+        }
+        </script>
+        Session["ThemKH"] = null;
+    }
+    else if (Session["LoiThemKH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+    window.onload = (event) => {
+        toastMixin.fire({
+        animation: true,
+                title: '@Session["LoiThemKH"]',
+                icon: 'error'
+                });
+    }
+        </script>
+        Session["LoiThemKH"] = null;
+    }
+}
+
+
+@{
+    if (Session["SuaKH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuaKH"]',
+
+                });
+             }
+        </script>
+        Session["SuaKH"] = null;
+    }
+    else if (Session["LoiSuaKH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["LoiSuaKH"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["LoiSuaKH"] = null;
+    }
+}
+
+
+@{
+    if (Session["XoaKH"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["XoaKH"]',
+
+                });
+             }
+        </script>
+        Session["XoaKH"] = null;
+    }
+
+}
+
+
+

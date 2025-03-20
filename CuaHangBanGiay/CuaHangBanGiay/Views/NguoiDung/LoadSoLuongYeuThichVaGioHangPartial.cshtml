@@ -1,0 +1,40 @@
+﻿@using CuaHangBanGiay.Models
+<div class="navbar-nav ml-auto py-0 d-none d-lg-block" id="giohangVaYeuThich">
+
+    @{
+        if (Session["Taikhoan"] == null)
+        {
+            <a class="dropdown-toggle" style="text-decoration:none;margin-right:10px" data-toggle="dropdown">
+                <i class="fas fa-user"></i>
+                Tài khoản
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="@Url.Action("DangNhap", "NguoiDung")">Đăng nhập</a>
+                <a class="dropdown-item" href="@Url.Action("DangKy", "NguoiDung")">Đăng ký</a>
+            </div>
+        }
+        else
+        {
+            tb_NguoiDung nd = (tb_NguoiDung)Session["Taikhoan"];
+            <a class="dropdown-toggle" style="text-decoration:none;margin-right:10px" data-toggle="dropdown">
+                <i class="fas fa-user"></i>
+                @nd.TenHienThi
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="@Url.Action("XemThongTin", "NguoiDung")">Thông tin</a>
+                <a class="dropdown-item" href="@Url.Action("DangXuat", "NguoiDung")">Đăng xuất</a>
+            </div>
+        }
+    }
+
+    <a href="@Url.Action("YeuThich", "NguoiDung")" class="btn px-0">
+        <i class="fas fa-heart text-primary"></i>
+        <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">@ViewBag.SoLuongYeuThich</span>
+    </a>
+    <a href="@Url.Action("GioHang", "NguoiDung")" class="btn px-0 ml-3">
+        <i class="fas fa-shopping-cart text-primary"></i>
+        <span class="badge text-secondary border border-secondary rounded-circle">@ViewBag.SoLuongGioHang</span>
+
+    </a>
+</div>
+

@@ -1,0 +1,164 @@
+﻿@using CuaHangBanGiay.Models;
+@{
+    tb_NguoiDung nd = null;
+    if (Session["Taikhoan"] != null)
+    {
+        nd = (tb_NguoiDung)Session["Taikhoan"];
+    }
+}
+<br />
+<h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Lập đơn hàng</span></h5>
+<div class="pt-2">
+    <div class="bg-light p-30 mb-3">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <input hidden name="thanhtien" id="thanhtien" value="@ViewBag.ThanhTienToanSP" />
+                <h6 class="text-uppercase">Thành tiền: <strong>@ConvertMoney.convertMoney(ViewBag.ThanhTienToanSP).000 VNĐ</strong></h6>
+            </div>
+            <div class="col-md-12 form-group">
+                <input hidden name="tienship" id="tienship" value="@ViewBag.TienShip" />
+                <h6 class="text-uppercase">Phí ship: <strong style="color:red">@ConvertMoney.convertMoney(ViewBag.TienShip).000 VNĐ</strong></h6>
+            </div>
+            <div class="col-md-12 form-group">
+                <input hidden name="tongcong" id="tongcong" value="@ViewBag.TongCong" />
+                <h6 class="text-uppercase">Tổng cộng: <strong style="color:limegreen">@ConvertMoney.convertMoney(ViewBag.TongCong).000 VNĐ</strong></h6>
+            </div>
+            <div class="col-md-12 form-group">
+                <h5>Thông tin liên hệ </h5>
+            </div>
+            <div class="col-md-6 form-group">
+                <input name="name" class="form-control" id="name" type="text" placeholder="Họ và tên">
+            </div>
+            <div class="col-md-6 form-group">
+                <input name="phone" class="form-control" id="phone" type="text" placeholder="Số điện thoại">
+            </div>
+            <div class="col-md-12 form-group" id="groupaddress">
+                <input id="address" name="address" class="form-control" type="text" placeholder="Địa chỉ nhận hàng">
+            </div>
+
+            <div class="col-md-6 form-group">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="typeAddress" id="house" checked>
+                    <label class="custom-control-label" for="house">Nhà riêng</label>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="typeAddress" id="office">
+                    <label class="custom-control-label" for="office">Văn phòng</label>
+                </div>
+            </div>
+            @{
+                if (nd != null)
+                {
+                    <div class="col-md-12 form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input name="addressAccount" type="checkbox" class="custom-control-input" id="addressAccount" onclick="SuDungDiaChiTK(this)">
+                            <input hidden id="dctk" value="@nd.DiaChi" />
+                            <label class="custom-control-label" for="addressAccount" data-toggle="collapse" data-target="#address-account">Sử dụng địa chỉ tài khoản</label>
+                        </div>
+                        <div class="collapse col-md-12 form-group" id="address-account" style="margin-top: 20px">
+                            Địa chỉ: @nd.DiaChi
+                        </div>
+                    </div>
+                }
+            }
+            <div class="col-md-12 form-group">
+                <h5>Hình thức thanh toán</h5>
+            </div>
+            <div class="col-md-6 form-group">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="typePayment" id="tructiep" value="@Init.thanhToanTT" checked>
+                    <label class="custom-control-label" for="tructiep">@Init.thanhToanTT</label>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="typePayment" value="@Init.thanhToanVNPay" id="vnpay">
+                    <label class="custom-control-label" for="vnpay">@Init.thanhToanVNPay</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-2">
+    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" onclick="GuiDonHang()">Đặt hàng</button>
+</div>
+
+
+<script>
+    function SuDungDiaChiTK(input) {
+        if (input.checked) {
+            var address = document.getElementById('address');
+            address.remove();
+        }
+        else {
+            var group = document.getElementById('groupaddress');
+            group.innerHTML = `<input id="address" name="address" class="form-control" type="text" placeholder="Địa chỉ nhận hàng">`;
+        }
+    }
+    function GuiDonHang() {
+        var hoten = document.getElementById('name').value;
+        var sdt = document.getElementById('phone').value;
+
+        var diachi;
+        var tmp = document.getElementById('addressAccount');
+        if (tmp == undefined) {
+
+            diachi = document.getElementById('address').value;
+        }
+        else {
+            var diachitaikhoan = tmp.checked;
+            if (diachitaikhoan == true) {
+                diachi = document.getElementById('dctk').value;
+            }
+            else {
+                diachi = document.getElementById('address').value;
+            }
+        }
+
+
+        var thanhtien = document.getElementById('thanhtien').value;
+        var tienship = document.getElementById('tienship').value;
+        var tongcong = document.getElementById('tongcong').value;
+
+        var nharieng = document.getElementById('house').checked;
+
+
+        var tructiep = document.getElementById('tructiep').checked;
+
+        if (hoten == null || hoten == "") {
+            toastMixin.fire({
+                animation: true,
+                title: `Bạn cần nhập họ tên người nhận vào đơn`,
+                icon: 'error'
+            });
+        }
+        else if (sdt == null || sdt == "") {
+            toastMixin.fire({
+                animation: true,
+                title: `Bạn cần nhập SĐT người nhận vào đơn`,
+                icon: 'error'
+            });
+        }
+        else if (diachi == null || diachi == "") {
+            toastMixin.fire({
+                animation: true,
+                title: `Bạn cần nhập địa chỉ người nhận vào đơn`,
+                icon: 'error'
+            });
+        }
+        else {
+            const url = new URL('@Url.Action("ThanhToan", "NguoiDung")', location.origin);
+            url.searchParams.set('hoten', hoten);
+            url.searchParams.set('sdt', sdt);
+            url.searchParams.set('diachi', diachi);
+            url.searchParams.set('nharieng', nharieng);
+            url.searchParams.set('tructiep', tructiep);
+            url.searchParams.set('thanhtien', thanhtien);
+            url.searchParams.set('tienship', tienship);
+            url.searchParams.set('tongcong', tongcong);
+            window.location = url.href;
+        }
+    }
+</script>

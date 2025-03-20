@@ -1,0 +1,70 @@
+﻿@using CuaHangBanGiay.Models;
+@model tb_DonMuaHang
+
+<div class="modal fade" id="modalHuyDon-@Model.ID">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <label> Bạn có muốn huỷ đơn hàng mã <strong style="color:red;">@Model.ID</strong> không?</label>
+
+                <div class="form-group">
+                    <strong style="color:red;">Thành tiền: </strong>@ConvertMoney.convertMoney(Model.TongTien).000VNĐ
+                </div>
+                <div class="form-group">
+                    <strong style="color:red;">Tiền ship: </strong>@ConvertMoney.convertMoney(Model.TienShip).000VNĐ
+                </div>
+                <div class="form-group">
+                    <strong style="color:red;">Tổng cộng: </strong>@ConvertMoney.convertMoney(Model.TongCong).000VNĐ
+                </div>
+
+                <div class="form-group">
+                    <strong style="color:red;">Họ tên: </strong>@Model.HoTen
+                </div>
+                <div class="form-group">
+                    <strong style="color:red;">Địa chỉ: </strong>@Model.DiaChiGiaoHang
+                </div>
+                <div class="form-group">
+                    <strong style="color:red;">SĐT: </strong>@Model.SDT
+                </div>
+                <div class="form-group">
+                    <strong style="color:red;">Kích thước: </strong>@(Model.NhaRieng == false ? "Nhà riêng" : "Văn phòng")
+                </div>
+
+                <div class="form-group">
+                    <strong style="color:red;">Ngày đặt: </strong>@Model.NgayDat
+                </div>
+                @{
+                    if (Model.NgayDuKien != null)
+                    {
+                        <div class="form-group">
+                            <strong style="color:red;">Màu sắc: </strong>@Model.NgayDuKien
+                        </div>
+                    }
+                }
+
+                <div class="form-group">
+                    <strong style="color:red;">Hình thức: </strong>@Model.HinhThucTT
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                @Html.ActionLink("Xóa", "XacNhanHuyDonHang", "NguoiDung", new { @id = Model.ID }, new { @class = "btn btn-danger" })
+
+            </div>
+
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

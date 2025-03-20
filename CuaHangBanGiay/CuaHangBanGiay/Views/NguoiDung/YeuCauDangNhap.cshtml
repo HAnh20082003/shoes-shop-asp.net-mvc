@@ -1,0 +1,32 @@
+﻿@using CuaHangBanGiay.Models;
+@model tb_SanPham
+<div class="modal fade" id="modalYeuCauDangNhap">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <label> Bạn cần phải đăng nhập để đăng bài</label>
+
+                <label> Bạn có muốn đăng nhập ngay không?</label>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                @Html.ActionLink("Đăng nhập", "XacNhanDangNhap", "NguoiDung", new { id_sp = ViewBag.ID_SP }, new { @class = "btn btn-danger" })
+
+            </div>
+
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

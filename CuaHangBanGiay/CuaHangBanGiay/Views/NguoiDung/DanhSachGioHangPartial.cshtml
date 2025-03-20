@@ -1,0 +1,195 @@
+﻿@using CuaHangBanGiay.Models;
+@model IEnumerable<tb_MatHang>
+<style>
+    .button {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-top: 5px;
+        border: 2px solid lightgray;
+        display: inline;
+        cursor: pointer;
+        color: black;
+        background-color: white;
+        width: 40px;
+    }
+
+        .button:hover {
+            background-color: slategray;
+            color: white;
+        }
+
+    .button-disable {
+        cursor: default;
+        color: lightgray;
+        background-color: white;
+    }
+
+        .button-disable:hover {
+            color: lightgray;
+            background-color: white;
+        }
+
+    .text-number {
+        margin-left: 10px;
+        margin-right: 10px;
+        display: inline;
+    }
+
+    .sign {
+        user-select: none;
+    }
+</style>
+<div class="col-lg-9 table-responsive mb-5 ">
+
+    @{
+        Giohang giohang = new Giohang();
+        if (Session["GioHang"] != null)
+        {
+            giohang = (Giohang)Session["GioHang"];
+        <div class="d-md-flex justify-content-end">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalXoaTatCaGH">
+                Xoá tất cả
+            </button>
+        </div>
+           
+            @Html.Action("XoaTatCaGioHangPartial", "NguoiDung")
+        }
+    }
+    <h5 class="section-title position-relative text-uppercase mb-3" style="margin-top: 10px"><span class="bg-secondary pr-3">GIỎ HÀNG CỦA BẠN</span></h5>
+    <table class="table table-light table-borderless table-hover text-center mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th class="col-3">Số lượng</th>
+                <th>Thông số</th>
+                <th>Tổng cộng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+            @{
+                if (Session["GioHang"] == null)
+                {
+                    <tr>
+                        <td class="align-middle" colspan="7">
+                            Giỏ hàng của bạn hiện đang rỗng
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    for (int i = 0; i < giohang.matHang.Count(); i++)
+                    {
+                        var sp = giohang.matHang[i].sps[0];
+                        var mh = sp.tb_MatHang;
+                        var sl = giohang.matHang[i].sps.Count();
+                        var slspcl = Init.db.tb_SanPham.Where(n => n.TrangThai != true && n.ID_MatHang == mh.ID && n.ID_KichCo == sp.ID_KichCo && n.ID_MauSac == sp.ID_MauSac && n.ID_GioiTinh == sp.ID_GioiTinh).Count();
+                        <tr>
+                            <td class="align-middle"><img src="~/@Init.folderImageProduct@mh.TenMatHang/@mh.AnhMoTa" alt="" style="width: 50px;"></td>
+                            <td class="align-middle">@mh.TenMatHang</td>
+                            <td class="align-middle">@ConvertMoney.convertMoney(mh.Gia - mh.Gia * mh.GiamGia / 100).000VNĐ</td>
+                            <td class="align-middle">
+                                <input hidden id="id_mathang-@i" value="@sp.ID_MatHang" />
+                                <input hidden id="id_kichthuoc-@i" value="@sp.ID_KichCo" />
+                                <input hidden id="id_mausac-@i" value="@sp.ID_MauSac" />
+                                <input hidden id="id_gioitinh-@i" value="@sp.ID_GioiTinh" />
+                                @{
+                                    if (sl == 1)
+                                    {
+                                        <button class="button button-disable">
+                                            <span class="sign">-</span>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="button" id="@i" onclick="GiamSL(this)">
+                                            <span class="sign">-</span>
+                                        </button>
+                                    }
+                                }
+                                <div class="text-number">@sl</div>
+                                @{
+                                    if (sl == slspcl)
+                                    {
+                                        <button class="button button-disable">
+                                            <span class="sign">+</span>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="button" id="@i" onclick="TangSL(this)">
+                                            <span class="sign">+</span>
+                                        </button>
+                                    }
+                                }
+                            </td>
+                            <td class="align-middle">
+                                Cỡ @sp.tb_SizeMatHang.tb_BangKichThuoc.KichThuoc, Màu @sp.tb_MauMatHang.tb_BangMauSP.MauSac, Giày @sp.tb_GioiTinhMatHang.tb_BangGioiTinh.GioiTinh
+                            </td>
+                            <td class="align-middle">
+                                @{
+                                    Html.RenderAction("LoadThanhTienMatHangPartial", "NguoiDung", new { @id_matHang = mh.ID, @id_kichthuoc = sp.ID_KichCo, @id_mausac = sp.ID_MauSac, @id_gioitinh = sp.ID_GioiTinh });
+                                }
+                            </td>
+                            <td class="align-middle">
+
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modalXoaSP-@mh.ID">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                @Html.Action("XoaMatHangGioHangPartial", "NguoiDung", new { @id_matHang = mh.ID, @id_kichthuoc = sp.ID_KichCo, @id_mausac = sp.ID_MauSac, @id_gioitinh = sp.ID_GioiTinh })
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+
+    @{
+        if (Session["GioHang"] != null)
+        {
+            Html.RenderAction("LoadTomTatGioHangPartial", "NguoiDung");
+        }
+    }
+</div>
+
+<script>
+    function GiamSL(input) {
+        var i = input.id;
+        var id_mathang = document.getElementById(`id_mathang-${i}`).value;
+        var id_kichthuoc = document.getElementById(`id_kichthuoc-${i}`).value;
+        var id_mausac = document.getElementById(`id_mausac-${i}`).value;
+        var id_gioitinh = document.getElementById(`id_gioitinh-${i}`).value;
+        const url = new URL('@Url.Action("ThayDoiSoLuong", "NguoiDung")', location.origin);
+        url.searchParams.set('id_matHang', id_mathang);
+        url.searchParams.set('id_kichthuoc', id_kichthuoc);
+        url.searchParams.set('id_mausac', id_mausac);
+        url.searchParams.set('id_gioitinh', id_gioitinh);
+        url.searchParams.set('tang', -1);
+        $('#dsgh').load(url.href);
+        const url2 = new URL('@Url.Action("LoadSoLuongYeuThichVaGioHangPartial", "NguoiDung")', location.origin);
+        $('#giohangVaYeuThich').load(url2.href);
+    }
+    function TangSL(input) {
+        var i = input.id;
+        var id_mathang = document.getElementById(`id_mathang-${i}`).value;
+        var id_kichthuoc = document.getElementById(`id_kichthuoc-${i}`).value;
+        var id_mausac = document.getElementById(`id_mausac-${i}`).value;
+        var id_gioitinh = document.getElementById(`id_gioitinh-${i}`).value;
+        const url = new URL('@Url.Action("ThayDoiSoLuong", "NguoiDung")', location.origin);
+        url.searchParams.set('id_matHang', id_mathang);
+        url.searchParams.set('id_kichthuoc', id_kichthuoc);
+        url.searchParams.set('id_mausac', id_mausac);
+        url.searchParams.set('id_gioitinh', id_gioitinh);
+        url.searchParams.set('tang', 1);
+        $('#dsgh').load(url.href);
+        const url2 = new URL('@Url.Action("LoadSoLuongYeuThichVaGioHangPartial", "NguoiDung")', location.origin);
+        $('#giohangVaYeuThich').load(url2.href);
+    }
+</script>
+
+
+

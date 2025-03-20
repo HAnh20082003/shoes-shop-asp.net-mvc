@@ -1,0 +1,25 @@
+﻿@model CuaHangBanGiay.Models.tb_NguoiDung
+
+
+<div class="modal fade" id="modalXoaKH-@Model.ID">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("XoaKH", "KhachHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ID)
+                    <h3>Bạn có muốn ngừng HĐ khách hàng <strong style="color:red">@Model.TenHienThi</strong> không?</h3>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Ngừng HĐ</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+

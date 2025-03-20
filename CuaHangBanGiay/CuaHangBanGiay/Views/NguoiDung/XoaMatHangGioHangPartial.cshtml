@@ -1,0 +1,44 @@
+﻿@using CuaHangBanGiay.Models;
+@model tb_SanPham
+
+<div class="modal fade" id="modalXoaSP-@Model.ID_MatHang">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <label> Bạn có muốn xóa sản phẩm <strong style="color:red;">@Model.tb_MatHang.TenMatHang</strong> khỏi giỏ hàng không?</label>
+                <div class="form-group">
+                    <strong style="color:red;">Ảnh sản phẩm: </strong><img style="width: 50px; height: 50px" src="~/@Init.folderImageProduct@Model.tb_MatHang.tb_DanhMuc.TenDanhMuc/@Model.tb_MatHang.TenMatHang/@Model.tb_MatHang.AnhMoTa" />
+                </div>
+                <div class="form-group">
+                    <strong style="color:red;">Kích thước: </strong>@Model.tb_SizeMatHang.tb_BangKichThuoc.KichThuoc
+                </div>
+                <div class="form-group">
+                    <strong style="color:red;">Màu sắc: </strong>@Model.tb_MauMatHang.tb_BangMauSP.MauSac
+                </div>
+
+                <div class="form-group">
+                    <strong style="color:red;">Giới tính: </strong>@Model.tb_GioiTinhMatHang.tb_BangGioiTinh.GioiTinh
+                </div>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                @Html.ActionLink("Xóa", "XacNhanXoaMatHangGioHang", "NguoiDung", new { id_matHang = Model.ID_MatHang, id_kichthuoc = Model.ID_KichCo, id_mausac = Model.ID_MauSac, id_gioitinh = Model.ID_GioiTinh }, new { @class = "btn btn-danger" })
+
+            </div>
+
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using CuaHangBanGiay.Models
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3>@ViewBag.MatHang</h3>
+
+                                        <p>Số lượng mặt hàng</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-success">
+                                    <div class="inner">
+                                        <h3>@ViewBag.SPDB<sup style="font-size: 20px"></sup></h3>
+
+                                        <p>Sản phẩm đã bán</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-box"></i>
+                                    </div>
+                                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>@ViewBag.KH</h3>
+
+                                        <p>Khách hàng</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
+                                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-danger">
+                                    <div class="inner">
+                                        <h3>@ViewBag.DH</h3>
+
+                                        <p>Đơn hàng đã hủy</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    @*<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>*@
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 d-flex">
+                <div class="card col-12">
+                    <div class="card-body">
+                        <div>
+                            <canvas id="MatHangBanChay"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex">
+                <div class="card col-12">
+                    <div class="card-header">
+                        <h4>Đánh giá gần đây</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-body">
+                            <div class="direct-chat-messages">
+                                <!-- Message. Default to the left -->
+                                @foreach (var item in ViewBag.DanhGia as List<tb_DanhGiaTraiNghiem>)
+                                {
+                                    <div class="direct-chat-msg">
+                                        <!--Thêm đường dẫn đến trang chi tiết mặt hàng-->
+                                        <a href="@Url.Action("XemSanPham","NguoiDung", new { Area = "" , id_matHang = item.ID_MatHang  })">
+                                            <div class="direct-chat-infos clearfix">
+                                                <span class="direct-chat-name float-left">@item.tb_MatHang.TenMatHang</span>
+                                                <span class="direct-chat-timestamp float-right">@item.NgayDanhGia</span>
+                                            </div>
+                                            <!-- /.direct-chat-infos -->
+                                            @{
+                                                if (item.tb_NguoiDung.AnhDaiDien != null)
+                                                {
+                                                    <img class="direct-chat-img" src="~/@Init.folderAvatarUser@item.tb_NguoiDung.AnhDaiDien" alt="message user image">
+                                                }
+                                                else
+                                                {
+                                                    <img class="direct-chat-img" src="~/@(Init.folderAvatarUser)user.png" alt="message user image">
+                                                }
+                                            }
+
+                                            <!-- /.direct-chat-img -->
+                                            <div class="direct-chat-text">
+                                                <strong>@item.tb_NguoiDung.TenHienThi: </strong>
+                                                @item.NoiDung
+                                            </div>
+                                        </a>
+                                        <!-- /.direct-chat-text -->
+                                    </div>
+                                    <!-- /.direct-chat-msg -->
+                                }
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+    var SPBC = document.getElementById('MatHangBanChay');
+
+     new Chart(SPBC, {
+        type: 'bar',
+        data: {
+            labels: [
+                 @foreach(var item in ViewBag.MHBC as List<tb_MatHang>)
+            {
+                <text>
+                '@item.TenMatHang',
+
+                </text>
+            }
+                /*'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'*/
+            ],
+            datasets: [{
+                label: 'Mặt hàng bán chạy',
+                data: [
+                      @foreach(var item in ViewBag.MHBC as List<tb_MatHang>)
+            {
+                <text>
+                @item.tb_SanPham.Where(s=>s.TrangThai==true).Count(),
+
+                </text>
+            }
+                    /*12, 19, 3, 5, 2, 3*/
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+        }
+
+
+
+     });
+
+</script>

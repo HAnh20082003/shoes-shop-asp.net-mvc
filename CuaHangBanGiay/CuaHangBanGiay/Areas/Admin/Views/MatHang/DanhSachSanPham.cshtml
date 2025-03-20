@@ -1,0 +1,207 @@
+﻿@model IEnumerable<CuaHangBanGiay.Models.tb_SanPham>
+
+@using CuaHangBanGiay.Models
+
+
+<div class="modal fade" id="modalThemSanPham">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            @using (Html.BeginForm("ThemSP", "MatHang", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="number"  name="ID" value="@ViewBag.ID"  hidden/>
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Kích thước</label>
+                                    <div class="col-md-12">
+                                        <div class="btn-group btn-group-toggle row" data-toggle="buttons">
+                                            @{
+
+                                                foreach (var item in ViewBag.KichThuoc as List<tb_BangKichThuoc>)
+                                                {
+                                                    <label class="btn btn-outline-success active col-1 m-1">
+                                                        <input type="radio" value="@item.ID" name="KichThuoc" id="KichThuoc-@item.ID" autocomplete="off"/> @item.KichThuoc
+                                                    </label>
+
+                                                }
+
+
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Màu sắc</label>
+                                    <div class="col-md-12">
+                                        <div class="btn-group btn-group-toggle row" data-toggle="buttons">
+                                            @foreach (var item in ViewBag.MauSac as List<tb_BangMauSP>)
+                                            {
+                                                <label class="btn btn-outline-secondary active col-2 m-1">
+                                                    <input type="radio" value="@item.ID" name="MauSac" id="MauSac-@item.ID" autocomplete="off"/> @item.MauSac
+                                                </label>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Giới tính</label>
+                                    <div class="col-md-12">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            @foreach (var item in ViewBag.GioiTinh as List<tb_BangGioiTinh>)
+                                            {
+                                                <label class="btn btn-outline-danger active col-4 m-1">
+                                                    <input type="radio" value="@item.ID" name="GioiTinh" id="GioiTinh-@item.ID" autocomplete="off"/> @item.GioiTinh
+                                                </label>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Số lượng SP</label>
+                                    <div class="col-md-12">
+                                        <input type="number" min="0" max="1000" name="SoLuong" required class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+            }
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-10">
+                <h3>Danh sách sản phẩm</h3>
+
+            </div>
+            <div class="col-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn-lg btn btn-primary me-md-2" id="ThemSanPham" data-toggle="modal" data-target="#modalThemSanPham">
+                    Thêm sản phẩm
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <table class="table table-bordered table-hover" id="danhsachsanpham">
+            <thead>
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.tb_MatHang.TenMatHang)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID_KichCo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID_MauSac)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID_GioiTinh)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrangThai)
+                    </th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+
+                    int i = 1;
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @item.tb_MatHang.TenMatHang
+                            </td>
+                            <td>
+                                @item.tb_SizeMatHang.tb_BangKichThuoc.KichThuoc
+                            </td>
+                            <td>
+                                @item.tb_MauMatHang.tb_BangMauSP.MauSac
+                            </td>
+                            <td>
+                                @item.tb_GioiTinhMatHang.tb_BangGioiTinh.GioiTinh
+                            </td>
+                            <td>
+
+
+                                @{
+                                    if (item.TrangThai == false)
+                                    {
+                                        <label class="btn btn-success">Còn hàng</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="btn btn-danger">Đã bán</label>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("XoaSanPham","MatHang", new { @id = item.ID })" class="btn btn-danger">Xóa</a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
+
+
+<script>
+    var table1 = new DataTable('#danhsachsanpham', {
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json',
+        },
+    });
+</script>
+

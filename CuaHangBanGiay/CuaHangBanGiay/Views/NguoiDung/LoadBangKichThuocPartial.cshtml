@@ -1,0 +1,31 @@
+﻿@using CuaHangBanGiay.Models;
+@model IEnumerable<tb_BangKichThuoc>
+
+<div class="bg-light p-4 mb-30">
+    <form>
+        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+            <input type="radio" class="custom-control-input" checked id="size-all" name="size">
+            <input hidden id="sl-size" value="@Model.Count()">
+            <label class="custom-control-label" for="size-all">Tất cả</label>
+            <span class="badge border font-weight-normal">
+                @Init.getSoLuongMatHang(ViewBag.ID_DanhMuc, ViewBag.KeyWord)
+            </span>
+        </div>
+
+        @{
+            for (int i = 0; i < Model.Count(); i++)
+            {
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input hidden id="id_size-@i" value="@Model.ElementAt(i).ID">
+                    <input type="radio" class="custom-control-input" id="size-@i" name="size">
+                    <label class="custom-control-label" for="size-@i">@Model.ElementAt(i).KichThuoc</label>
+                    <span class="badge border font-weight-normal">
+                        @Init.getSoLuongKichThuoc(Model.ElementAt(i).ID, ViewBag.ID_DanhMuc, ViewBag.KeyWord)
+                    </span>
+                </div>
+            }
+        }
+    </form>
+</div>
+
+

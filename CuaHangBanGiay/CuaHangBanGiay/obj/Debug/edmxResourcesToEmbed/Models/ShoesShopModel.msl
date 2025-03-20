@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShoesShop1ModelStoreContainer" CdmEntityContainer="ShoesShopEntities">
+    <EntitySetMapping Name="tb_Admin">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_Admin">
+        <MappingFragment StoreEntitySet="tb_Admin">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_AnhMatHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_AnhMatHang">
+        <MappingFragment StoreEntitySet="tb_AnhMatHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_MatHang" ColumnName="ID_MatHang" />
+          <ScalarProperty Name="DuongDanAnh" ColumnName="DuongDanAnh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_BangGiaShip">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_BangGiaShip">
+        <MappingFragment StoreEntitySet="tb_BangGiaShip">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MinThanhTien" ColumnName="MinThanhTien" />
+          <ScalarProperty Name="MaxThanhTien" ColumnName="MaxThanhTien" />
+          <ScalarProperty Name="Phi" ColumnName="Phi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_BangGiaSP">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_BangGiaSP">
+        <MappingFragment StoreEntitySet="tb_BangGiaSP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MinGia" ColumnName="MinGia" />
+          <ScalarProperty Name="MaxGia" ColumnName="MaxGia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_BangGioiTinh">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_BangGioiTinh">
+        <MappingFragment StoreEntitySet="tb_BangGioiTinh">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_BangKichThuoc">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_BangKichThuoc">
+        <MappingFragment StoreEntitySet="tb_BangKichThuoc">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="KichThuoc" ColumnName="KichThuoc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_BangMauSP">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_BangMauSP">
+        <MappingFragment StoreEntitySet="tb_BangMauSP">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MauSac" ColumnName="MauSac" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_Banner">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_Banner">
+        <MappingFragment StoreEntitySet="tb_Banner">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AnhBanner" ColumnName="AnhBanner" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_ChiTietDonMuaHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_ChiTietDonMuaHang">
+        <MappingFragment StoreEntitySet="tb_ChiTietDonMuaHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_MoTaDonHang" ColumnName="ID_MoTaDonHang" />
+          <ScalarProperty Name="ID_SanPham" ColumnName="ID_SanPham" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_DanhGiaTraiNghiem">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_DanhGiaTraiNghiem">
+        <MappingFragment StoreEntitySet="tb_DanhGiaTraiNghiem">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_NguoiDung" ColumnName="ID_NguoiDung" />
+          <ScalarProperty Name="ID_MatHang" ColumnName="ID_MatHang" />
+          <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="NgayDanhGia" ColumnName="NgayDanhGia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_DanhMuc">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_DanhMuc">
+        <MappingFragment StoreEntitySet="tb_DanhMuc">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenDanhMuc" ColumnName="TenDanhMuc" />
+          <ScalarProperty Name="SoLuongMatHang" ColumnName="SoLuongMatHang" />
+          <ScalarProperty Name="AnhMoTa" ColumnName="AnhMoTa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_DonMuaHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_DonMuaHang">
+        <MappingFragment StoreEntitySet="tb_DonMuaHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_NguoiDung" ColumnName="ID_NguoiDung" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+          <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+          <ScalarProperty Name="SDT" ColumnName="SDT" />
+          <ScalarProperty Name="DiaChiGiaoHang" ColumnName="DiaChiGiaoHang" />
+          <ScalarProperty Name="NhaRieng" ColumnName="NhaRieng" />
+          <ScalarProperty Name="NgayDat" ColumnName="NgayDat" />
+          <ScalarProperty Name="NgayDuyet" ColumnName="NgayDuyet" />
+          <ScalarProperty Name="NgayDuKien" ColumnName="NgayDuKien" />
+          <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+          <ScalarProperty Name="TienShip" ColumnName="TienShip" />
+          <ScalarProperty Name="TongCong" ColumnName="TongCong" />
+          <ScalarProperty Name="HinhThucTT" ColumnName="HinhThucTT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_GioiTinhMatHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_GioiTinhMatHang">
+        <MappingFragment StoreEntitySet="tb_GioiTinhMatHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_MatHang" ColumnName="ID_MatHang" />
+          <ScalarProperty Name="ID_GioiTinh" ColumnName="ID_GioiTinh" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_MatHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_MatHang">
+        <MappingFragment StoreEntitySet="tb_MatHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_DanhMuc" ColumnName="ID_DanhMuc" />
+          <ScalarProperty Name="TenMatHang" ColumnName="TenMatHang" />
+          <ScalarProperty Name="Gia" ColumnName="Gia" />
+          <ScalarProperty Name="SoLuongSanPham" ColumnName="SoLuongSanPham" />
+          <ScalarProperty Name="DaBan" ColumnName="DaBan" />
+          <ScalarProperty Name="GiamGia" ColumnName="GiamGia" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="AnhMoTa" ColumnName="AnhMoTa" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="NgayThem" ColumnName="NgayThem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_MauMatHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_MauMatHang">
+        <MappingFragment StoreEntitySet="tb_MauMatHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_MatHang" ColumnName="ID_MatHang" />
+          <ScalarProperty Name="ID_MauSac" ColumnName="ID_MauSac" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_MoTaDonHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_MoTaDonHang">
+        <MappingFragment StoreEntitySet="tb_MoTaDonHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_DonMuaHang" ColumnName="ID_DonMuaHang" />
+          <ScalarProperty Name="ID_MatHang" ColumnName="ID_MatHang" />
+          <ScalarProperty Name="ID_KichCo" ColumnName="ID_KichCo" />
+          <ScalarProperty Name="ID_MauSac" ColumnName="ID_MauSac" />
+          <ScalarProperty Name="ID_GioiTinh" ColumnName="ID_GioiTinh" />
+          <ScalarProperty Name="Gia" ColumnName="Gia" />
+          <ScalarProperty Name="GiamGia" ColumnName="GiamGia" />
+          <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+          <ScalarProperty Name="ThanhTien" ColumnName="ThanhTien" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_NguoiDung">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_NguoiDung">
+        <MappingFragment StoreEntitySet="tb_NguoiDung">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="TenHienThi" ColumnName="TenHienThi" />
+          <ScalarProperty Name="SDT" ColumnName="SDT" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+          <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="AnhDaiDien" ColumnName="AnhDaiDien" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_SanPham">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_SanPham">
+        <MappingFragment StoreEntitySet="tb_SanPham">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_MatHang" ColumnName="ID_MatHang" />
+          <ScalarProperty Name="ID_KichCo" ColumnName="ID_KichCo" />
+          <ScalarProperty Name="ID_MauSac" ColumnName="ID_MauSac" />
+          <ScalarProperty Name="ID_GioiTinh" ColumnName="ID_GioiTinh" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_SizeMatHang">
+      <EntityTypeMapping TypeName="ShoesShop1Model.tb_SizeMatHang">
+        <MappingFragment StoreEntitySet="tb_SizeMatHang">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_MatHang" ColumnName="ID_MatHang" />
+          <ScalarProperty Name="ID_KichThuoc" ColumnName="ID_KichThuoc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a76ed7dc7e6a4b76a4e9697753d27e95" Name="Diagram1">
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_Admin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_AnhMatHang" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_BangGiaShip" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_BangGiaSP" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_BangGioiTinh" Width="1.5" PointX="6" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_BangKichThuoc" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_BangMauSP" Width="1.5" PointX="6" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_Banner" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_ChiTietDonMuaHang" Width="1.5" PointX="12.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_DanhGiaTraiNghiem" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_DanhMuc" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_DonMuaHang" Width="1.5" PointX="6" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_GioiTinhMatHang" Width="1.5" PointX="5.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_MatHang" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_MauMatHang" Width="1.5" PointX="8.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_MoTaDonHang" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_NguoiDung" Width="1.5" PointX="3.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_SanPham" Width="1.5" PointX="10.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ShoesShop1Model.tb_SizeMatHang" Width="1.5" PointX="8.25" PointY="13.5" IsExpanded="true" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_AnhMat__ID_Ma__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_GioiTi__ID_Gi__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MoTaDo__ID_Gi__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MoTaDo__ID_Ki__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_SizeMa__ID_Ki__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MauMat__ID_Ma__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MoTaDo__ID_Ma__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_ChiTie__ID_Mo__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_ChiTie__ID_Sa__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_DanhGi__ID_Ma__7F2BE32F" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_DanhGi__ID_Ng__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MatHan__ID_Da__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_DonMua__ID_Ng__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MoTaDo__ID_Do__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_GioiTi__ID_Ma__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_SanPha__ID_Gi__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MauMat__ID_Ma__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_MoTaDo__ID_Ma__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_SanPha__ID_Ma__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_SizeMa__ID_Ma__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_SanPha__ID_Ma__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="ShoesShop1Model.FK__tb_SanPha__ID_Ki__6A30C649" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

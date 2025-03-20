@@ -1,0 +1,206 @@
+﻿@using CuaHangBanGiay.Models;
+@model IEnumerable<tb_DanhMuc>
+
+@{
+    ViewBag.Title = "Shoe Shop MVC";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<div class="container-fluid mb-3">
+    <div class="row px-xl-5">
+        <div class="col-lg-12">
+            <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+                    @{
+                        var banner = (List<tb_Banner>)ViewBag.Banner;
+                        for (int i = 1; i < banner.Count(); i++)
+                        {
+                            <li data-target="#header-carousel" data-slide-to="@i"></li>
+                            
+                        }
+                    }
+
+                </ol>
+                <div class="carousel-inner">
+
+                    @{
+                            var banners = (List<tb_Banner>)ViewBag.Banner;
+                        for (int i = 0; i < banners.Count(); i++)
+                        {
+                            if (i == 0)
+                            {
+
+                                <div class="carousel-item position-relative active" style="height: 430px;">
+                                    <img class="position-absolute w-100 h-100" src="~/@Init.folderBanner@banners[i].AnhBanner" style="object-fit: fill;">
+                                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                        <div class="p-3" style="max-width: 700px;">
+                                            <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="@Url.Action("CuaHang", "NguoiDung")">Mua sắm nào</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="carousel-item position-relative" style="height: 430px;">
+                                    <img class="position-absolute w-100 h-100" src="~/@Init.folderBanner@banners[i].AnhBanner" style="object-fit: fill;">
+                                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                        <div class="p-3" style="max-width: 700px;">
+                                            <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="@Url.Action("CuaHang", "NguoiDung")">Mua sắm nào</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+     
+    </div>
+</div>
+<!-- Carousel End -->
+<!-- Featured Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Sản phẩm chất lượng</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                <h5 class="font-weight-semi-bold m-0">Giá ship siêu rẻ</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Giao hàng nhanh chóng</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured End -->
+<!-- Categories Start -->
+<div class="container-fluid pt-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Danh mục sản phẩm</span></h2>
+    <div class="row px-xl-5 pb-3">
+        @{
+            foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <a class="text-decoration-none" href="@Url.Action("CuaHang", "NguoiDung", new { @id_danhMuc = item.ID })">
+                        <div class="cat-item d-flex align-items-center mb-4">
+                            <div class="overflow-hidden" style="width: 100px; height: 100px;">
+                                <img class="img-fluid" src="~/@Init.folderImageCategory@item.AnhMoTa" alt="">
+                            </div>
+                            <div class="flex-fill pl-3">
+                                <h6>@item.TenDanhMuc</h6>
+                                <small class="text-body">
+                                    @Init.getsoluongmh(item.ID) Sản phẩm
+                                    @*@item.tb_MatHang.Sum(s=>s.tb_SanPham.Count())  Sản phẩm*@
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</div>
+<!-- Categories End -->
+<!-- Products Start -->
+<div class="container-fluid pt-5 pb-3">
+    @{
+        Html.RenderAction("LoadSanPhamMoiNhatPartial", "NguoiDung", new { @nameAction = "TrangChu" });
+    }
+</div>
+
+@{
+    Html.RenderAction("LoadSPVuaXemPartial", "NguoiDung", new { @nameAction = "TrangChu" });
+}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-left',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+</script>
+@{
+
+    if (Session["SuccessDangNhap"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuccessDangNhap"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["SuccessDangNhap"] = null;
+    }
+    if (Session["SuccessDangXuat"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuccessDangXuat"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["SuccessDangXuat"] = null;
+    }
+}

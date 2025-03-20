@@ -1,0 +1,244 @@
+﻿@using CuaHangBanGiay.Models;
+@model tb_MatHang
+
+@{
+    ViewBag.Title = "XemSanPham";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="@Url.Action("TrangChu", "NguoiDung")">Trang chủ</a>
+                <a class="breadcrumb-item text-dark" href="@Url.Action("CuaHang", "NguoiDung")">Cửa hàng</a>
+                <a class="breadcrumb-item text-dark" href="@Url.Action("CuaHang", "NguoiDung", new { @id_danhMuc = Model.ID_DanhMuc })">Danh mục "@Model.tb_DanhMuc.TenDanhMuc"</a>
+                <span class="breadcrumb-item active">Chi tiết sản phẩm @Model.TenMatHang</span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pb-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 mb-30">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner bg-light">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="~/@Init.folderImageProduct@Model.TenMatHang/@Model.AnhMoTa" alt="Image">
+                    </div>
+                    @{
+                        foreach (var item in Model.tb_AnhMatHang)
+                        {
+                            <div class="carousel-item">
+                                <img class="w-100 h-100" src="~/@Init.folderImageProduct/@Model.TenMatHang/@item.DuongDanAnh" alt="Image">
+                            </div>
+                        }
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-7 h-auto mb-30">
+            <div class="h-100 bg-light p-30">
+                <h3>@Model.TenMatHang</h3>
+                <div class="d-flex mb-3">
+                    <div class="text-primary mr-2">
+                        @{
+                            int count = (int)Model.Rating;
+                            for (int i = 0; i < count; i++)
+                            {
+                                <small class="fas fa-star"></small>
+                            }
+                            if (count != Model.Rating)
+                            {
+                                <small class="fas fa-star-half-alt"></small>
+                                count++;
+                            }
+                            for (int i = count; i < 5; i++)
+                            {
+                                <small class="far fa-star"></small>
+                            }
+                            <small>
+
+                            </small>
+
+                        }
+                    </div>
+                    <small class="pt-1">
+                        (@Init.getSoLuotDanhGiaSanPham(Model.ID) Lượt đánh giá)
+                    </small>
+
+                </div>
+
+                @{
+                    if (Model.GiamGia != 0)
+                    {
+                        <h3 class="font-weight-semi-bold mb-4" style="color:red;">
+                            @Init.getGiamGiaSanPham(Model.Gia, Model.GiamGia).000 VNĐ <del style="color:black;">@ConvertMoney.convertMoney(Model.Gia).000 VNĐ</del>
+                        </h3>
+                    }
+                    else
+                    {
+                        <h3 class="font-weight-semi-bold mb-4 text-red" style="color:red;">@ConvertMoney.convertMoney(Model.Gia).000 VNĐ</h3>
+                    }
+                }
+                <div id="dstssp">
+
+                    @Html.Action("LoadThongSoSanPhamPartial", "NguoiDung")
+                </div>
+
+                <div class="d-flex pt-2">
+                    <strong class="text-dark mr-2">Chia sẻ:</strong>
+                    <div class="d-inline-flex">
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="bg-light p-30">
+                <div class="nav nav-tabs mb-4">
+                    <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">
+                        Mô tả sản phẩm
+                    </a>
+                    <input hidden id="soluotdanhgia" value="@Init.getSoLuotDanhGiaSanPham(Model.ID)" />
+                    <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2" id="thongtindanhgia">
+                        Bài đánh giá (@Init.getSoLuotDanhGiaSanPham(Model.ID))
+                    </a>
+
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <h4>Mô tả cho sản phẩm</h4>
+                        <div>@Html.Raw(Model.MoTa)</div>
+                        
+                    </div>
+                    <div class="tab-pane fade show" id="tab-pane-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @{
+                                    Html.RenderAction("LoadThongTinDanhGiaSPPartial", "NguoiDung", new { @page = ViewBag.Trang, @id_matHang = Model.ID });
+                                }
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4 class="mb-4">Đăng bài đánh giá sản phẩm</h4>
+                                <div class="d-flex my-3">
+                                    <p class="mb-0 mr-2">Điểm đánh giá *:</p>
+                                    <input type="hidden" name="rating" id="rating" value="0" />
+                                    <div class="text-primary">
+                                        <i class="far fa-star" id="star-1" onclick="clickChangeRating(1)"></i></>
+                                        <i class="far fa-star" id="star-2" onclick="clickChangeRating(2)"></i>
+                                        <i class="far fa-star" id="star-3" onclick="clickChangeRating(3)"></i>
+                                        <i class="far fa-star" id="star-4" onclick="clickChangeRating(4)"></i>
+                                        <i class="far fa-star" id="star-5" onclick="clickChangeRating(5)"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Nội dung đánh giá *:</label>
+                                    <textarea name="noidung" id="noidung" cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group mb-0">
+                                    @{
+                                        if (Session["Taikhoan"] != null)
+                                        {
+                                            <button class="btn btn-primary px-3" onclick="DangBaiDanhGia(@Model.ID)">Đăng bài</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-primary px-3" data-toggle="modal" data-target="#modalYeuCauDangNhap">Đăng bài</button>
+                                            @Html.Action("YeuCauDangNhap", "NguoiDung", new { @id_sp = Model.ID })
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+                      <div class="tab-pane fade" id="tab-pane-2">
+
+                    </div>
+                    -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    Html.RenderAction("LoadSPVuaXemPartial", "NguoiDung", new { @id_matHang = Model.ID, @nameAction = "XemSanPham" });
+    Html.RenderAction("LoadGoiYSanPhamPartial", "NguoiDung", new { @id_matHang = Model.ID, @nameAction = "XemSanPham" });
+}
+
+
+<script>
+    function DangBaiDanhGia(id_matHang) {
+        var rating = document.getElementById('rating');
+        var content = document.getElementById('noidung');
+
+        if (rating.value == 0) {
+            toastMixin.fire({
+                animation: true,
+                title: `Bạn chưa chọn điểm đánh giá`,
+                icon: 'error'
+            });
+        }
+        else if (content.value == "" || content.value == null) {
+            toastMixin.fire({
+                animation: true,
+                title: `Bạn cần nhập nội dung cho bài đánh giá`,
+                icon: 'error'
+            });
+        }
+        else {
+            const url = new URL('@Url.Action("DangBaiDanhGia", "NguoiDung")', location.origin);
+            url.searchParams.set('id_matHang', id_matHang);
+            url.searchParams.set('rating', rating.value);
+            url.searchParams.set('noidung', content.value);
+            url.searchParams.set('page', @ViewBag.Trang);
+            $('#dsdg').load(url.href);
+            toastMixin.fire({
+                    animation: true,
+                    title: `Đã đăng bài đánh giá`,
+                    icon: 'success'
+            });
+            var soluot = Number.parseInt(document.getElementById('soluotdanhgia').value) + 1;
+            var a = document.getElementById('thongtindanhgia');
+            a.innerHTML = `Bài đánh giá (${soluot})`;
+        }
+    }
+    function clickChangeRating(index){
+        for (var i = 1; i <= index; i++) {
+            var star = document.querySelector("#star-" + i);
+            star.className = "fas fa-star";
+        }
+        for (var i = index + 1; i <= 5; i++) {
+            var star = document.querySelector("#star-" + i);
+            star.className = "far fa-star";
+        }
+        var rating = document.getElementById('rating');
+        rating.value = index;
+    }
+</script>
+

@@ -1,0 +1,332 @@
+﻿@using CuaHangBanGiay.Models;
+@model tb_NguoiDung
+@{
+    ViewBag.Title = "XemThongTin";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<style>
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 500px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+        margin-bottom: 16px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+    #preview {
+        width: 200px;
+        height: 200px;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="registrationForm" action="@Url.Action("CapNhatThongTin", "NguoiDung")" method="post" enctype="multipart/form-data" onsubmit="return ChangeInfo()">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="anhdaidien">Ảnh Đại Diện:</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input form-control" id="anhdaidien" name="anhDaiDien" accept="image/*" onchange="previewImage(this)" style="border: none">
+                                    <label class="custom-file-label" for="anhdaidien">Chọn ảnh</label>
+                                </div>
+                                @*<input type="file" id="anhdaidien" name="anhDaiDien" accept="image/*" onchange="previewImage(this)" style="border: none">*@
+                                @{
+                                    if (string.IsNullOrEmpty(Model.AnhDaiDien))
+                                    {
+                                        <img id="preview" src="#" alt="Ảnh Đại Diện" style="display:none; max-width: 100%; margin-top: 10px;">
+                                    }
+                                    else
+                                    {
+                                        <img id="preview" src="~/@Init.folderAvatarUser@Model.AnhDaiDien" alt="Ảnh Đại Diện" style="max-width: 100%; margin-top: 10px;">
+                                    }
+                                }
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="tendn">Tên Đăng Nhập:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        @Model.TenDangNhap
+                                    </div>
+
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="matkhau">Mật Khẩu:</label>
+                                    </div>
+                                    <div class="col-8"> <input type="password" class="form-control" id="matkhau" name="matkhau" value="@Model.MatKhau"></div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="tenhienthi">Tên Hiển Thị:</label>
+                                    </div>
+                                    <div class="col-8"> <input type="text" class="form-control" id="tenhienthi" name="tenhienthi" value="@Model.TenHienThi"></div>
+
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="sdt">Số Điện Thoại:</label>
+                                    </div>
+                                    <div class="col-8"> <input type="tel" class="form-control" id="sdt" name="sdt" pattern="[0-9]{10,12}" value="@Model.SDT"></div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="email">Email:</label>
+                                    </div>
+                                    <div class="col-8"> <input type="email" class="form-control" id="email" name="email" value="@Model.Email"></div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="gioitinh">Giới Tính:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        @{
+                                            if (Model.GioiTinh == 1)
+                                            {
+                                                <select id="gioiTinh" name="gioitinh" class="form-control">
+                                                    <option selected value="1">Nam</option>
+                                                    <option value="0">Nữ</option>
+                                                    <option value="-1">Khác</option>
+                                                </select>
+                                            }
+                                            else if (Model.GioiTinh == 0)
+                                            {
+                                                <select id="gioiTinh" name="gioitinh" class="form-control">
+                                                    <option value="1">Nam</option>
+                                                    <option selected value="0">Nữ</option>
+                                                    <option value="-1">Khác</option>
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <select id="gioiTinh" name="gioitinh" class="form-control">
+                                                    <option value="1">Nam</option>
+                                                    <option value="0">Nữ</option>
+                                                    <option selected value="-1">Khác</option>
+                                                </select>
+                                            }
+                                        }
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="ngaysinh">Ngày Sinh:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="date" id="ngaysinh" class="form-control" name="ngaysinh" value="@ConvertDate.getStrDate(@Model.NgaySinh)">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="diachi">Địa Chỉ:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <textarea class="form-control" id="diachi" name="diachi" rows="4">@Model.DiaChi</textarea>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+                                
+                                
+                            </div>
+                        </div>
+                       
+                       
+                        <button type="submit">Lưu thay đổi</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+   
+</div>
+
+<script src="script.js"></script>
+
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('preview');
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+    function ChangeInfo() {
+        var matkhau = document.getElementById('matkhau').value;
+        var tenhienthi = document.getElementById('tenhienthi').value;
+        var sdt = document.getElementById('sdt').value;
+        var ngaysinh = document.getElementById('ngaysinh').value;
+        var email = document.getElementById('email').value;
+        var diachi = document.getElementById('diachi').value;
+        if (matkhau == null || matkhau == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Mật khẩu không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (tenhienthi == null || tenhienthi == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Tên hiển thị không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (sdt == null || sdt == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Số điện thoại không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (email == null || email == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Email không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (ngaysinh == null || ngaysinh == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Ngày sinh không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (diachi == null || diachi == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Địa chỉ không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        return true;
+    }
+
+</script>
+<!--===============================================================================================-->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-left',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+</script>
+
+
+@{
+    if (Session["SuccessCapNhat"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["SuccessCapNhat"]',
+                icon: 'success'
+                });
+             }
+        </script>
+        Session["SuccessCapNhat"] = null;
+    }
+}
+
+
+

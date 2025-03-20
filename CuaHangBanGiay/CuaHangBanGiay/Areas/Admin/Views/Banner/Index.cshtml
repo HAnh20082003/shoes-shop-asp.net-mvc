@@ -1,0 +1,153 @@
+﻿
+@model IEnumerable<CuaHangBanGiay.Models.tb_Banner>
+@using CuaHangBanGiay.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        @using (Html.BeginForm("ThemBanner", "Banner", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div id="Anh" class="custom-file">
+                                    <input type="file" multiple class="custom-file-input form-control" id="inputGroupFile" required name="Anh" aria-describedby="inputGroupFileAddon">
+                                    <label class="custom-file-label" for="inputGroupFile">Chọn ảnh</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <button type="submit" id="Luu" class="btn btn-success form-control">Lưu</button>
+                            </div>
+
+
+                        </div>
+                        }
+                    </div>
+                    <div class="card-body" style="overflow-y:scroll;height:1000px;">
+                        <table class="table table-bordered table-striped table-hover" id="banner">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="col-2">STT</th>
+                                    <th class="col-8">Ảnh</th>
+                                    <th class="col-2">Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="align-middle text-center">@i</td>
+                                            <td><img src="~/@Init.folderBanner@item.AnhBanner" style="height:200px" /></td>
+                                            <td class="align-middle text-center"><a href="@Url.Action("XoaBanner","Banner",new { id = item.ID })" class="btn btn-danger">Xóa</a></td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<script>
+    bsCustomFileInput.init();
+
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+@{
+    if (Session["ThemBanner"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["ThemBanner"]',
+
+                });
+             }
+        </script>
+        Session["ThemBanner"] = null;
+    }
+
+}
+
+
+
+
+@{
+    if (Session["XoaBanner"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["XoaBanner"]',
+
+                });
+             }
+        </script>
+        Session["XoaBanner"] = null;
+    }
+
+}
+
+

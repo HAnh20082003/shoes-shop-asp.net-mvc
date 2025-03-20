@@ -1,0 +1,33 @@
+﻿@using CuaHangBanGiay.Models;
+@model IEnumerable<tb_BangGioiTinh>
+
+
+<div class="bg-light p-4 mb-30">
+    <form>
+        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+            <input type="radio" class="custom-control-input" checked id="gender-all" name="gender">
+            <input hidden id="sl-gender" value="@Model.Count()">
+            <label class="custom-control-label" for="gender-all">Tất cả</label>
+            <span class="badge border font-weight-normal">
+                @Init.getSoLuongMatHang(ViewBag.ID_DanhMuc, ViewBag.KeyWord)
+            </span>
+        </div>
+
+        @{
+            for (int i = 0; i < Model.Count(); i++)
+            {
+                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                    <input hidden id="id_gender-@i" value="@Model.ElementAt(i).ID">
+                    <input type="radio" class="custom-control-input" id="gender-@i" name="gender">
+                    <label class="custom-control-label" for="gender-@i">@Model.ElementAt(i).GioiTinh</label>
+                    <span class="badge border font-weight-normal">
+                        @Init.getSoLuongGioiTinh(Model.ElementAt(i).ID, ViewBag.ID_DanhMuc, ViewBag.KeyWord)
+                    </span>
+                </div>
+            }
+        }
+    </form>
+</div>
+
+
+

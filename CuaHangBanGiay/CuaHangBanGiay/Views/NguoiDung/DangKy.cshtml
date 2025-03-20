@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/LayoutNguoiDung.cshtml";
+}
+
+<style>
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 800px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+        margin-bottom: 16px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    #preview {
+        width: 200px;
+        height: 200px;
+    }
+
+</style>
+
+<div class="container">
+    <form id="registrationForm" action="@Url.Action("DangKy", "NguoiDung")" method="post" enctype="multipart/form-data" onsubmit="return Signup()">
+        <label for="anhdaidien">Ảnh Đại Diện:</label>
+        @*<input type="file" id="anhdaidien" name="anhDaiDien" accept="image/*" onchange="previewImage(this)" style="border: none">*@
+        <div class="custom-file">
+            <input type="file" class="custom-file-input form-control" id="anhdaidien" required name="anhDaiDien" accept="image/*" onchange="previewImage(this)" style="border: none" aria-describedby="inputGroupFileAddon">
+            <label class="custom-file-label" for="inputGroupFile">Chọn ảnh</label>
+        </div>
+        <img id="preview" src="#" alt="Ảnh Đại Diện" style="display:none; max-width: 100%; margin-top: 10px;">
+        <label for="tendn">Tên Đăng Nhập:</label>
+        <input type="text" id="tendn" name="tendn">
+
+        <label for="matkhau">Mật Khẩu:</label>
+        <input type="password" id="matkhau" name="matkhau">
+
+        <label for="tenhienthi">Tên Hiển Thị:</label>
+        <input type="text" id="tenhienthi" name="tenhienthi">
+
+        <label for="sdt">Số Điện Thoại:</label>
+        <input type="tel" id="sdt" name="sdt" pattern="[0-9]{10,12}">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+
+        <label for="gioitinh">Giới Tính:</label>
+        <select id="gioiTinh" name="gioitinh">
+            <option selected value="1">Nam</option>
+            <option value="0">Nữ</option>
+            <option value="-1">Khác</option>
+        </select>
+
+        <label for="ngaysinh">Ngày Sinh:</label>
+        <input type="date" id="ngaysinh" name="ngaysinh">
+
+        <label for="diachi">Địa Chỉ:</label>
+        <textarea id="diachi" name="diachi" rows="4"></textarea>
+        <button type="submit">Đăng Ký</button>
+    </form>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('preview');
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+    function Signup() {
+        var tendn = document.getElementById('tendn').value;
+        var matkhau = document.getElementById('matkhau').value;
+        var tenhienthi = document.getElementById('tenhienthi').value;
+        var sdt = document.getElementById('sdt').value;
+        var ngaysinh = document.getElementById('ngaysinh').value;
+        var email = document.getElementById('email').value;
+        var diachi = document.getElementById('diachi').value;
+        if (tendn.trim() == null || tendn == '') {
+            toastMixin.fire({
+                animation: true,
+                title: 'Tên đăng nhập không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (matkhau == null || matkhau == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Mật khẩu không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (tenhienthi == null || tenhienthi == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Tên hiển thị không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (sdt == null || sdt == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Số điện thoại không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (email == null || email == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Email không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (ngaysinh == null || ngaysinh == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Ngày sinh không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        else if (diachi == null || diachi == "") {
+            toastMixin.fire({
+                animation: true,
+                title: 'Địa chỉ không được để trống',
+                icon: 'error'
+            });
+            return false;
+        }
+        return true;
+    }
+
+</script>
+<!--===============================================================================================-->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var toastMixin = Swal.mixin({
+        toast: true,
+        icon: 'success',
+        title: 'General Title',
+        animation: false,
+        position: 'top-left',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+</script>
+
+
+@{
+    if (Session["ErrorDangKy"] != null)
+    {
+        <script>
+            var toastMixin = Swal.mixin({
+                toast: true,
+                icon: 'success',
+                title: 'General Title',
+                animation: false,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+             window.onload = (event) => {
+                toastMixin.fire({
+                animation: true,
+                title: '@Session["ErrorDangKy"]',
+                icon: 'error'
+                });
+             }
+        </script>
+        Session["ErrorDangKy"] = null;
+    }
+}
+

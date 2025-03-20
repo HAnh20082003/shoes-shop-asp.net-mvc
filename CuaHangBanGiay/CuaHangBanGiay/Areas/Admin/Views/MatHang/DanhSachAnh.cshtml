@@ -1,0 +1,108 @@
+﻿@model IEnumerable<CuaHangBanGiay.Models.tb_AnhMatHang>
+@using CuaHangBanGiay.Models
+@{ 
+    tb_MatHang mh = (tb_MatHang)ViewBag.MatHang;
+}
+
+<div class="card col-12">
+    <div class="card-header">
+        @using (Html.BeginForm("ThemAnhCTMH","MatHang",FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="text" name="ID"  value="@ViewBag.ID" hidden/>
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <div id="Anh" class="custom-file" hidden>
+                            <input type="file" multiple class="custom-file-input form-control" id="inputGroupFile" required name="AnhMH" aria-describedby="inputGroupFileAddon">
+                            <label class="custom-file-label" for="inputGroupFile">Chọn ảnh</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <button id="Huy" hidden onclick="ThemAnh(this.id)" class="btn btn-danger">Hủy</button>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="submit" hidden id="Luu" class="btn btn-success">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" onclick="ThemAnh(this.id)" class="btn-lg btn btn-primary me-md-2" id="ThemAnh">
+                Thêm ảnh
+            </button>
+        </div>
+    </div>
+    <div class="card-body" id="AnhCTMH" style="overflow-y:scroll;height:500px;">
+        <div class="col-12">
+            <table class="table table-bordered table-striped table-hover" id="mathang">
+                <thead>
+                    <tr class="text-center">
+                        <th class="col-4">STT</th>
+                        <th class="col-4">Ảnh</th>
+                        <th class="col-4">Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        <tr class="text-center">
+                            <td class="align-middle">
+                                0
+                            </td>
+                            <td class="align-middle">
+                                <img style="width:150px;height:150px" src="~/@Init.folderImageProduct@mh.TenMatHang/@mh.AnhMoTa" />
+                            </td>
+                            <td class="align-middle">
+                                
+                            </td>
+                        </tr>
+
+                        int i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr class="text-center">
+                                <td class="align-middle">
+                                    @i
+                                </td>
+                                <td class="align-middle">
+                                    <img style="width:150px;height:150px" src="~/@Init.folderImageProduct@item.tb_MatHang.TenMatHang/@item.DuongDanAnh" />
+                                </td>
+                                <td class="align-middle">
+                                    @Html.ActionLink("Xóa","XoaAnhCTMH","MatHang",new { @id=item.ID , @idMH = item.ID_MatHang },new {@class ="btn btn-danger" })
+                                </td>
+                            </tr>
+                            i++;
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+<script>
+    bsCustomFileInput.init();
+
+</script>
+
+<script>
+    function ThemAnh(id) {
+        if (id == 'ThemAnh') {
+            document.getElementById('Anh').hidden = false;
+            document.getElementById('Luu').hidden = false;
+            document.getElementById('Huy').hidden = false;
+            document.getElementById('ThemAnh').hidden = true;
+        }
+        else if(id=='Huy') {
+            document.getElementById('Anh').hidden = true;
+            document.getElementById('Luu').hidden = true;
+            document.getElementById('Huy').hidden = true;
+            document.getElementById('ThemAnh').hidden = false;
+        }
+    }
+</script>
+
+
